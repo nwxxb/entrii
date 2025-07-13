@@ -18,6 +18,7 @@ require:
   - standard-performance
   - rubocop-rails
   - rubocop-performance
+  - rubocop-rspec
 
 inherit_gem:
   standard: config/base.yml
