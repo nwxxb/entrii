@@ -10,6 +10,28 @@ require_relative "../config/environment"
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
+require "capybara/rspec"
+require "capybara/rails"
+require "capybara/cuprite"
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    window_size: [1200, 800],
+    timeout: 10,
+    process_timeout: 10,
+    browser_options: {"no-sandbox": nil},
+    js_errors: true
+  )
+end
+Capybara.javascript_driver = :cuprite
+Capybara.server = :puma, {Silent: true}
+Capybara.default_max_wait_time = 5 # seconds
+# Normalize whitespaces when using `has_text?` and similar matchers,
+# i.e., ignore newlines, trailing spaces, etc.
+# That makes tests less dependent on slightly UI changes.
+Capybara.default_normalize_ws = true
+Capybara.save_path = Rails.root.join("tmp/capybara")
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
