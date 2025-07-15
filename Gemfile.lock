@@ -80,6 +80,11 @@ GEM
     diff-lcs (1.6.2)
     docile (1.4.1)
     erubi (1.13.1)
+    factory_bot (6.4.5)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     ffi (1.17.2-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -281,6 +286,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   devise
+  factory_bot_rails
   jbuilder (~> 2.7)
   listen (~> 3.3)
   pg (~> 1.1)

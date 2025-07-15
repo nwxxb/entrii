@@ -32,6 +32,7 @@ group :development, :test do
   gem "standard", "~> 1.37.0", require: false
   gem "standard-rails", require: false
   gem "rubocop-rspec", require: false
+  gem "factory_bot_rails"
 end
 
 group :development do
