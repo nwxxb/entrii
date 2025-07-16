@@ -17,6 +17,9 @@ gem "jbuilder", "~> 2.7"
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+# let's start from webpacker (the old way) and turbo first
+gem "webpacker", "~> 5.x"
+gem "turbo-rails"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -54,3 +57,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+# see https://stackoverflow.com/a/79361034
+gem "concurrent-ruby", "1.3.4"
