@@ -22,7 +22,7 @@ RSpec.feature "Auth", :js do
       have_selector("input#user_sign_out[type='submit']")
     )
 
-    find("input#user_sign_out[type='submit']").click
+    find("button, a", text: "sign out").click
 
     expect(page).to have_current_path(root_path)
     expect(page).to have_selector("button, a", text: "sign in")
@@ -46,9 +46,7 @@ RSpec.feature "Auth", :js do
     end
 
     expect(page).to have_current_path(root_path)
-    expect(page).to have_selector("button, a", text: "sign out").or(
-      have_selector("input#user_sign_out[type='submit']")
-    )
+    expect(page).to have_selector("button, a", text: "sign out")
   end
 
   it "user can update it's email and password" do
@@ -126,7 +124,7 @@ RSpec.feature "Auth", :js do
 
     expect(page).to have_current_path(edit_user_registration_path)
 
-    find("input#user_destroy[type='submit']").click
+    find("button, a", text: "delete account").click
 
     expect(page).to have_current_path(root_path)
     expect(User.find_by(id: user.id).blank?).to be(true)

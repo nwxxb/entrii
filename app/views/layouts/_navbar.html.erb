@@ -1,7 +1,7 @@
 <div style="display: flex; justify-content: right;">
 <% if user_signed_in? %>
   <%= link_to 'profile', user_profile_path %>
-  <%= button_to 'sign out', destroy_user_session_path, id: "user_sign_out", method: :delete %>
+  <%= link_to 'sign out', destroy_user_session_path, id: "user_sign_out", data: { turbo_method: :delete } %>
 <% else %>
   <% if !current_page?(new_user_session_path) %>
     <%= link_to 'sign in', new_user_session_path %>
