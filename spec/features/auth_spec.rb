@@ -96,6 +96,7 @@ RSpec.feature "Auth", :js do
       find("[type='submit']").click
     end
 
+    expect(page).to have_content(/receive[\w\ ]*email[\w\ ]*instruction/i, wait: 0.5)
     user.reload
     email_body = ActionMailer::Base.deliveries.last.body.to_s
     hashed_token = email_body.match(/reset_password_token=([^&\s]+)">/)[1]
