@@ -1,4 +1,12 @@
-<p><%= current_user.email %></p>
-<p>created at: <%= current_user.created_at %></p>
+<h1>profile</h1>
 
-<%= link_to 'edit', edit_user_registration_path %>
+<div class="card">
+  <header>
+    <p><%= current_user.email %></p>
+    <p>joined at <%= current_user.created_at.iso8601 %></p>
+
+  </header>
+  <footer>
+    <%= link_to 'edit', edit_user_registration_path %>
+  </footer>
+</div>

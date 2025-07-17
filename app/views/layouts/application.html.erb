@@ -12,8 +12,28 @@
 
   <body>
     <%= render 'layouts/navbar' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <main>
+      <% if notice %>
+      <div class="flex one center two-700" style="padding: 0px 16px;">
+        <div class="notice card">
+          <header><%= notice %></header>
+        </div>
+      </div>
+      <% end %>
+
+      <% if alert %>
+      <div class="flex one center two-700" style="padding: 0px 16px;">
+        <div class="alert card">
+          <header><%= alert %></header>
+        </div>
+      </div>
+      <% end %>
+
+      <div class="flex one center two-700" style="padding: 0px 16px;">
+        <div>
+          <%= yield %>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
