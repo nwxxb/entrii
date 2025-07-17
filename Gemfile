@@ -27,6 +27,9 @@ gem "turbo-rails"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
 gem "devise"
+# we use turbo and this version lock is to prevent devise to respones errors with 200 ok
+# see https://github.com/heartcombo/devise/pull/5548
+gem "responders", "~> 3.1"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
