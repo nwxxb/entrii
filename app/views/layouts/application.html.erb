@@ -10,10 +10,30 @@
     <%= javascript_pack_tag 'application' %>
   </head>
 
-  <body>
+  <body style="margin: 0;">
     <%= render 'layouts/navbar' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <main>
+      <% if notice %>
+      <div class="flex one center two-700" style="padding: 0px 16px; margin: 8px 0px;">
+        <div class="notice card">
+          <header><%= fa_icon "check-square" %> <%= notice %></header>
+        </div>
+      </div>
+      <% end %>
+
+      <% if alert %>
+      <div class="flex one center two-700" style="padding: 0px 16px; margin: 8px 0px;">
+        <div class="alert card">
+          <header><%= fa_icon "warning" %> <%= alert %></header>
+        </div>
+      </div>
+      <% end %>
+
+      <div class="flex one center two-700" style="padding: 0px 16px;">
+        <div>
+          <%= yield %>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

@@ -1,13 +1,18 @@
-<div style="display: flex; justify-content: right;">
-<% if user_signed_in? %>
-  <%= link_to 'profile', user_profile_path %>
-  <%= button_to 'sign out', destroy_user_session_path, id: "user_sign_out", method: :delete %>
-<% else %>
-  <% if !current_page?(new_user_session_path) %>
-    <%= link_to 'sign in', new_user_session_path %>
+<nav style="position: static;">
+  <div class="brand">
+    Entrii
+  </div>
+  <div class="menu">
+  <% if user_signed_in? %>
+    <%= link_to 'profile', user_profile_path %>
+    <%= link_to 'sign out', destroy_user_session_path, id: "user_sign_out", data: { turbo_method: :delete } %>
+  <% else %>
+    <% if !current_page?(new_user_session_path) %>
+      <%= link_to 'sign in', new_user_session_path %>
+    <% end %>
+    <% if !current_page?(new_user_registration_path) %>
+      <%= link_to 'sign up', new_user_registration_path %>
+    <% end %>
   <% end %>
-  <% if !current_page?(new_user_registration_path) %>
-    <%= link_to 'sign up', new_user_registration_path %>
-  <% end %>
-<% end %>
-</div>
+  </div>
+</nav>
