@@ -21,6 +21,7 @@ gem "jbuilder", "~> 2.7"
 # let's start from webpacker (the old way) and turbo first
 gem "webpacker", "~> 5.x"
 gem "turbo-rails"
+gem "jquery-rails"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
