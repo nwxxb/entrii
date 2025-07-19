@@ -8,6 +8,7 @@ Things you may want to cover:
 * Ruby version
 
 * System dependencies
+  - libvips42 for processing image in active storage
 
 * Configuration
 
