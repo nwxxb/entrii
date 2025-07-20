@@ -49,7 +49,7 @@ RSpec.feature "Auth", :js do
     expect(page).to have_selector("button, a", text: "sign out")
   end
 
-  it "user can update it's email and password" do
+  it "user can update it's profile" do
     new_email = "new@example.com"
     new_password = "new_password"
     user = create(:user)
@@ -65,6 +65,9 @@ RSpec.feature "Auth", :js do
     expect(page).to have_current_path(edit_user_registration_path)
 
     within("form#edit_user[action='#{user_registration_path}']") do
+      attach_file Rails.root.join("spec/fixtures/files/simple_mountain.png") do
+        find("#user_avatar", visible: :all).click
+      end
       fill_in "user_email", with: new_email
       fill_in "user_password", with: new_password
       fill_in "user_password_confirmation", with: new_password
@@ -77,6 +80,7 @@ RSpec.feature "Auth", :js do
     user.reload
     expect(user.email).to eq(new_email)
     expect(user.valid_password?(new_password)).to be(true)
+    expect(user.avatar.attached?).to be(true)
   end
 
   it "user can forget it's password" do
@@ -94,6 +98,7 @@ RSpec.feature "Auth", :js do
       find("[type='submit']").click
     end
 
+    expect(page).to have_current_path(new_user_session_path)
     expect(page).to have_content(/receive[\w\ ]*email[\w\ ]*instruction/i, wait: 0.5)
     user.reload
     email_body = ActionMailer::Base.deliveries.last.body.to_s
@@ -124,7 +129,9 @@ RSpec.feature "Auth", :js do
 
     expect(page).to have_current_path(edit_user_registration_path)
 
-    find("button, a", text: "delete account").click
+    accept_prompt do
+      find("button, a", text: "delete account").click
+    end
 
     expect(page).to have_current_path(root_path)
     expect(User.find_by(id: user.id).blank?).to be(true)

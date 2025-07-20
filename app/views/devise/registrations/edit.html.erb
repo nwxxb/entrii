@@ -5,6 +5,13 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
+    <fieldset class="field" style="width: 100px;">
+      <% avatar_background_image_css = "background-image: url(#{url_for(current_user.avatar&.variant(resize_to_limit: [100, 100]))});" if current_user.avatar.attached? %>
+      <%= f.label :avatar, class: "dropimage", style: "padding-bottom: 100%; #{avatar_background_image_css}" do %>
+        <%= f.file_field :avatar, autofocus: true, accept: "image/png, image/jpeg", title: "click or drop image to change photo profile" %>
+      <% end %>
+    </fieldset>
+
     <fieldset class="field">
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -29,7 +36,7 @@
 
     <fieldset class="field">
       <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-      <%= f.password_field :current_password, autocomplete: "current-password" %>
+      <%= f.password_field :current_password, autocomplete: "current-password", required: true %>
     </fieldset>
 
     <fieldset class="actions">
