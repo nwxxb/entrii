@@ -4,6 +4,7 @@
   </div>
   <div class="menu">
   <% if user_signed_in? %>
+    <%= link_to 'questionnaires', questionnaires_path %>
     <%= link_to 'profile', user_profile_path %>
     <%= link_to 'sign out', destroy_user_session_path, id: "user_sign_out", data: { turbo_method: :delete } %>
   <% else %>
