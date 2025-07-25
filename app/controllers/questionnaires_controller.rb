@@ -13,15 +13,31 @@ class QuestionnairesController < ApplicationController
     @questionnaire = current_user.questionnaires.new(questionnaire_params)
 
     if @questionnaire.save
-      redirect_to questionnaires_path
+      redirect_to questionnaire_path(@questionnaire)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
+  def show
+    @questionnaire = current_user.questionnaires.find(params[:id])
+  end
+
   private
 
   def questionnaire_params
-    params.require(:questionnaire).permit(:title, :description)
+    permitted_params = params.require(:questionnaire)
+      .permit(
+        :title,
+        :description,
+        questions_attributes: [:name, :description, :value_type, :is_emptyable, :position]
+      )
+
+    # TODO: add position input
+    permitted_params[:questions_attributes]&.each do |_, question_params|
+      question_params.merge!({position: 0})
+    end
+
+    permitted_params
   end
 end
