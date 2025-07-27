@@ -1,29 +1,29 @@
 <h1>change your password</h1>
 
 <div class="card">
-  <footer>
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
     <%= f.hidden_field :reset_password_token %>
 
-    <fieldset class="field">
-      <%= f.label :password, "New password" %>
-      <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <fieldset class="field field--stacked">
+      <%= f.label :password do %>
+        New password
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
       <% end %>
       <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
     </fieldset>
 
-    <fieldset class="field">
+    <fieldset class="field field--stacked">
       <%= f.label :password_confirmation, "Confirm new password" %>
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </fieldset>
 
-    <fieldset class="actions">
-      <%= f.submit "change my password" %>
-    </fieldset>
+    <div class="actions">
+      <%= f.submit "change my password", class: "button" %>
+      <%= render "devise/shared/links" %>
+    </div>
   <% end %>
-  </footer>
 </div>
 
-<%= render "devise/shared/links" %>

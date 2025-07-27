@@ -1,33 +1,33 @@
 <h1>sign up</h1>
 
 <div class="card">
-  <footer>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <fieldset class="field">
+    <fieldset class="field field--stacked">
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
     </fieldset>
 
-    <fieldset class="field">
-      <%= f.label :password %>
-      <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <fieldset class="field field--stacked">
+      <%= f.label :password do %>
+        Password
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
       <% end %>
       <%= f.password_field :password, autocomplete: "new-password" %>
     </fieldset>
 
-    <fieldset class="field">
+    <fieldset class="field field--stacked">
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </fieldset>
 
-    <fieldset class="actions">
-      <%= f.submit "sign up" %>
-    </fieldset>
+    <div class="actions">
+      <%= f.submit "sign up", class: "button" %>
+      <%= render "devise/shared/links" %>
+    </div>
   <% end %>
-  </footer>
 </div>
 
-<%= render "devise/shared/links" %>

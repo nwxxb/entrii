@@ -1,11 +1,9 @@
 <h1><%= @questionnaire.title %></h1>
 
 <div class="card">
-  <footer>
-    <% @questionnaire.questions.each do |question| %>
-      <fieldset class="field">
-        <%= question.name %>
-      </fieldset>
-    <% end %>
-  </footer>
+  <% @questionnaire.questions.each do |question| %>
+    <fieldset class="field">
+      <%= question.name %>
+    </fieldset>
+  <% end %>
 </div>

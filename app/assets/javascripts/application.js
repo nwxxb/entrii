@@ -1,7 +1,7 @@
 //= require jquery3
 //= require jquery_ujs
 //
-$(document).on('change', '.dropimage', function(e) {
+$(document).on('change', '.field__dropimage', function(e) {
 	var inputfile = this;
 	var reader = new FileReader();
 
