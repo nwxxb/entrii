@@ -1,8 +1,29 @@
 @import url("https://unpkg.com/open-props");
 @import url("https://unpkg.com/open-props/normalize.min.css");
 
+:root {
+  font-size: var(--font-size-fluid-0);
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: var(--size-px-2);
+}
+
+h1 {
+  font-size: var(--font-size-fluid-3);
+}
+
+h2 {
+  font-size: var(--font-size-fluid-2);
+}
+
+h3 {
+  font-size: var(--font-size-fluid-1);
+}
+
+h4, h5, h6 {
+  font-size: var(--font-size-fluid-1);
+  font-weight: var(--font-weight-3);
 }
 
 .application-mainview {
@@ -48,6 +69,16 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.cards-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--size-px-2);
+
+  @media(min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .card {
   padding: var(--size-3) var(--size-3);
   border: var(--border-size-1) solid var(--surface-3);
@@ -57,6 +88,15 @@ h1, h2, h3, h4, h5, h6 {
   flex-flow: column;
   gap: var(--size-px-2);
   margin-bottom: var(--size-px-2);
+
+  &--ghost {
+    flex-flow: row;
+    align-items: center;
+    border: var(--border-size-2) dashed var(--surface-3);
+    border-radius: var(--radius-drawn-6);
+    filter: opacity(50%);
+    color: var(--text-1);
+  }
 }
 
 .field {
@@ -110,13 +150,15 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: var(--size-px-2);
+  margin-bottom: var(--size-px-2);
 }
 
 .button {
   display: flex;
   gap: var(--size-px-2);
   justify-content: center;
-  padding: var(--size-2) var(--size-3);
+  align-items: center;
+  padding: var(--size-fluid-1);
   border-radius: var(--radius-2);
   color: var(--text-1);
   background-color: var(--surface-1);
