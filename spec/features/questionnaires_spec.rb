@@ -41,7 +41,7 @@ RSpec.feature "Questionnaires", :js do
 
     visit questionnaires_path
 
-    find("button, a", text: "create questionnaire").click
+    first("button, a", text: "new questionnaire").click
 
     expect(page).to have_current_path(new_questionnaire_path)
 

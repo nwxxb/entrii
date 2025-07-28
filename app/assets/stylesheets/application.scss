@@ -89,6 +89,8 @@ h4, h5, h6 {
   gap: var(--size-px-2);
   margin-bottom: var(--size-px-2);
 
+  box-shadow: var(--shadow-4);
+
   &--ghost {
     flex-flow: row;
     align-items: center;
@@ -96,6 +98,8 @@ h4, h5, h6 {
     border-radius: var(--radius-drawn-6);
     filter: opacity(50%);
     color: var(--text-1);
+
+    box-shadow: none;
   }
 }
 
