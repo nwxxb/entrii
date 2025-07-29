@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   resources :questionnaires
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "homes#landing_page"
+
+  match "/:status", to: "errors#show", constraints: {status: /\d{3}/}, via: :all
 end
