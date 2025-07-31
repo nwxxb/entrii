@@ -11,6 +11,7 @@
         <%= f.fields_for :questions do |existing_question_f| %>
           <div class="card question-form">
             <%= existing_question_f.hidden_field :id %>
+            <%= existing_question_f.hidden_field :position %>
             <%= existing_question_f.hidden_field :_destroy, value: "0" %>
 
             <fieldset class="field field--stacked">
@@ -38,6 +39,8 @@
 
             <fieldset class="field">
               <%= f.button "remove", class: "button", type: :button, data: { behaviour: 'remove-question-form' } %>
+              <%= f.button "move up", class: "button", type: :button, data: { behaviour: 'change-question-position-up' } %>
+              <%= f.button "move down", class: "button", type: :button, data: { behaviour: 'change-question-position-down' } %>
             </fieldset>
           </div>
         <% end %>
@@ -47,6 +50,9 @@
         <div class="card question-form">
           <%# CHILDIDTEMPLATE will modified by jquery %>
           <%= f.fields_for :questions, @questionnaire.questions.new, child_index: 'CHILDIDTEMPLATE' do |question_f| %>
+            <%= question_f.hidden_field :position %>
+            <%= question_f.hidden_field :_destroy, value: "0" %>
+
             <fieldset class="field field--stacked">
               <%= question_f.label :name %>
               <%= question_f.text_field :name, autofocus: true %>
@@ -72,6 +78,8 @@
 
             <fieldset class="field">
               <%= f.button "remove", class: "button", type: :button, data: { behaviour: 'remove-question-form' } %>
+              <%= f.button "move up", class: "button", type: :button, data: { behaviour: 'change-question-position-up' } %>
+              <%= f.button "move down", class: "button", type: :button, data: { behaviour: 'change-question-position-down' } %>
             </fieldset>
           <% end %>
         </div>

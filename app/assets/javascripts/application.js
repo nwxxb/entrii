@@ -21,23 +21,22 @@ $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 	var $questionForm = $($questionFormTemplate.html());
 	var newId = new Date().getTime();
 
-	$questionForm.find('fieldset').each(function() {
-		$(this).find('input, select, textarea, label').each(function() {
-			if($(this).attr('name')) {
-				$(this).attr('name', $(this).attr('name').replace(/CHILDIDTEMPLATE/g, newId));
-			}
+	$questionForm.find('input, select, textarea, label').each(function() {
+		if($(this).attr('name')) {
+			$(this).attr('name', $(this).attr('name').replace(/CHILDIDTEMPLATE/g, newId));
+		}
 
-			if($(this).attr('id')) {
-				$(this).attr('id', $(this).attr('id').replace(/CHILDIDTEMPLATE/g, newId));
-			}
+		if($(this).attr('id')) {
+			$(this).attr('id', $(this).attr('id').replace(/CHILDIDTEMPLATE/g, newId));
+		}
 
-			if($(this).attr('for')) {
-				$(this).attr('for', $(this).attr('for').replace(/CHILDIDTEMPLATE/g, newId));
-			}
-		});
+		if($(this).attr('for')) {
+			$(this).attr('for', $(this).attr('for').replace(/CHILDIDTEMPLATE/g, newId));
+		}
 	});
 
 	$questionForm.clone().appendTo($questionsWrapper);
+	updateCardQuestionPositionValue();
 });
 
 $(document).on('click', '[data-behaviour="remove-question-form"]', function(e) {
@@ -48,4 +47,36 @@ $(document).on('click', '[data-behaviour="remove-question-form"]', function(e) {
 	$card.children('input[name^="questionnaire[questions_attributes]"][name$="[_destroy]"]').val("1")
 	$card.children('fieldset').remove()
 	$card.hide()
+	updateCardQuestionPositionValue();
 })
+
+$(document).on('click', '[data-behaviour="change-question-position-up"]', function(e) {
+	e.preventDefault();
+
+	var $card = $(this).closest('.card.question-form')
+	$card.prev().insertAfter($card)
+	updateCardQuestionPositionValue();
+})
+
+$(document).on('click', '[data-behaviour="change-question-position-down"]', function(e) {
+	e.preventDefault();
+
+	var $card = $(this).closest('.card.question-form')
+	$card.next().insertBefore($card)
+	updateCardQuestionPositionValue();
+})
+
+$(document).on('turbo:load', function(e) {
+	updateCardQuestionPositionValue();
+})
+
+function updateCardQuestionPositionValue() {
+	$questionsWrapper = $('[data-target="questions-wrapper"]')
+	if($questionsWrapper.length > 0 && $questionsWrapper.children().length > 0) {
+		$questionsWrapper.children('.question-form:visible').each(function(idx) {
+			$card = $(this)
+
+			$card.find('input[name^="questionnaire[questions_attributes]"][name$="[position]"]').val(String(idx))
+		})
+	}
+}

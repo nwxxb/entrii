@@ -11,6 +11,6 @@ class Questionnaire < ApplicationRecord
 
   validates :description, length: {in: 0..280}
 
-  has_many :questions
+  has_many :questions, -> { order(position: :asc) }
   accepts_nested_attributes_for :questions, allow_destroy: true
 end

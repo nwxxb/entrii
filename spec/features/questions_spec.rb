@@ -92,5 +92,45 @@ RSpec.feature "Questions", :js do
     end
   end
 
+  it "user can change the positions of all questions" do
+    user = create(:user)
+    questionnaire = create(:questionnaire, user: user)
+    existing_questions1 = create(:question, questionnaire: questionnaire, position: 0)
+    existing_questions2 = create(:question, questionnaire: questionnaire, position: 1)
+    existing_questions3 = create(:question, questionnaire: questionnaire, position: 3)
+    new_question1 = build(:question)
+
+    sign_in(user)
+
+    visit questionnaire_path(questionnaire)
+
+    first("button, a", text: "edit structure").click
+
+    expect(page).to have_content(questionnaire.title)
+    expect(page).to have_content(questionnaire.description)
+
+    within("form[action='#{questionnaire_questions_path(questionnaire)}']") do
+      find("button, a", text: "add question").click
+
+      all("input[name^='questionnaire[questions_attributes]'][name$='[name]']").last.fill_in with: new_question1.name
+      all("button, a", text: "move up").last.click
+
+      find("input[id$='_id'][value='#{existing_questions1.id}']", visible: :hidden)
+        .ancestor(".card.question-form").find("button, a", text: "move down").click
+
+      find("[type='submit']").click
+    end
+
+    expect(page).to have_current_path(questionnaire_path(questionnaire))
+    expect(page).to have_content(questionnaire.title)
+    texts = all("fieldset.field").map(&:text)
+    expect(texts).to eq([
+      existing_questions2.name,
+      existing_questions1.name,
+      new_question1.name,
+      existing_questions3.name
+    ])
+  end
+
   xit "user can upload a csv to generate the questionnaire structure"
 end

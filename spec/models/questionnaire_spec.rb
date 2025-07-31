@@ -65,4 +65,22 @@ RSpec.describe Questionnaire, type: :model do
 
     expect(questionnaire.questions.length).to eq(4)
   end
+
+  it "questions getter automatically order by it's position" do
+    questionnaire = create(:questionnaire)
+
+    existing_questions_1 = create(:question, questionnaire: questionnaire, position: 1)
+    existing_questions_4 = create(:question, questionnaire: questionnaire, position: 99999)
+    existing_questions_3 = create(:question, questionnaire: questionnaire, position: 999)
+    existing_questions_2 = create(:question, questionnaire: questionnaire, position: 200)
+
+    questions_names = questionnaire.questions.map(&:name)
+
+    expect(questions_names).to match([
+      existing_questions_1.name,
+      existing_questions_2.name,
+      existing_questions_3.name,
+      existing_questions_4.name
+    ])
+  end
 end

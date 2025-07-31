@@ -29,7 +29,9 @@ class QuestionsController < ApplicationController
 
     # TODO: add position input
     permitted_params[:questions_attributes]&.each do |_, question_params|
-      question_params.merge!({position: 0})
+      if question_params[:position].blank?
+        question_params.merge!({position: 0})
+      end
     end
 
     permitted_params
