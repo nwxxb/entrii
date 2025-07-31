@@ -38,10 +38,14 @@ $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 	});
 
 	$questionForm.clone().appendTo($questionsWrapper);
-
-	$questionsWrapper.on('click', '[data-behaviour="remove-question-form"]', function(e) {
-		e.preventDefault();
-
-		$(this).closest('.card').remove()
-	});
 });
+
+$(document).on('click', '[data-behaviour="remove-question-form"]', function(e) {
+	e.preventDefault();
+
+	var $card = $(this).closest('.card.question-form')
+
+	$card.children('input[name^="questionnaire[questions_attributes]"][name$="[_destroy]"]').val("1")
+	$card.children('fieldset').remove()
+	$card.hide()
+})

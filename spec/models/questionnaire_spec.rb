@@ -38,4 +38,31 @@ RSpec.describe Questionnaire, type: :model do
     expect(invalid_questionnaires.map { |f| f.errors.attribute_names }).to all(eq([:description]))
     expect(valid_questionnaires.map { |f| f.errors.attribute_names }).to all(eq([]))
   end
+
+  it "can create new questions" do
+    questionnaire = create(:questionnaire)
+
+    existing_questions_1 = create(:question, questionnaire: questionnaire)
+    existing_questions_2 = create(:question, questionnaire: questionnaire)
+    removed_questions_1 = create(:question, questionnaire: questionnaire)
+    removed_questions_2 = create(:question, questionnaire: questionnaire)
+
+    questions_attributes = {
+      questions_attributes: {
+        "1324712947103284" => {name: "a question"},
+        "0" => {name: "a question", _destroy: "0"},
+        "010231" => {name: "a question", _destroy: "1"},
+        "101001" => {id: "#{existing_questions_1.id}", name: "updated_name_for_question_1"},
+        "#{existing_questions_2.id}" => {id: "#{existing_questions_2.id}", name: "updated_name_for_question_2"},
+        "123792111" => {id: "#{removed_questions_1.id}", _destroy: "1"},
+        "#{removed_questions_2.id}" => {id: "#{removed_questions_2.id}", _destroy: "1"}
+      }.each_value do |val| # temporarily use 0 as default position value
+        val[:position] = 0
+      end
+    }
+
+    questionnaire.update(questions_attributes)
+
+    expect(questionnaire.questions.length).to eq(4)
+  end
 end

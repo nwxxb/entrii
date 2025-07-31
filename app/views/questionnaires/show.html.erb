@@ -1,5 +1,6 @@
 <h1><%= @questionnaire.title %></h1>
 
+<%= link_to 'edit structure', edit_questionnaire_questions_path(@questionnaire) %>
 <div class="card">
   <% @questionnaire.questions.each do |question| %>
     <fieldset class="field">
