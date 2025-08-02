@@ -1,6 +1,10 @@
-<h1><%= @questionnaire.title %></h1>
+<div class="card card--no-line">
+  <h1><%= @questionnaire.title %></h1>
+  <p><%= @questionnaire.description %></p>
+</div>
 
-<%= link_to 'edit structure', edit_questionnaire_questions_path(@questionnaire) %>
+<%= render 'questionnaires/subnavbar' %>
+
 <div class="card">
   <% @questionnaire.questions.each do |question| %>
     <fieldset class="field">

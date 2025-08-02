@@ -91,6 +91,11 @@ h4, h5, h6 {
 
   box-shadow: var(--shadow-4);
 
+  &--no-line {
+    border: none;
+    box-shadow: none;
+  }
+
   &--ghost {
     flex-flow: row;
     align-items: center;
@@ -192,5 +197,9 @@ h4, h5, h6 {
 
   &--warning {
     background-color: var(--yellow-6);
+  }
+
+  &--active {
+    background-color: var(--surface-2);
   }
 }

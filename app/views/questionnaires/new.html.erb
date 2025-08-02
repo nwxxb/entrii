@@ -27,46 +27,6 @@
       %>
     </fieldset>
 
-    <section class="card">
-      <%= f.button "add question", class: "button", type: :button, data: { behaviour: 'add-question-form' } %>
-
-      <section data-target="questions-wrapper">
-      </section>
-
-      <template data-target="question-form-template">
-        <div class="card">
-          <%= f.fields_for :questions, @questionnaire.questions.new, child_index: 'CHILDIDTEMPLATE' do |question_f| %>
-            <fieldset class="field field--stacked">
-              <%= question_f.label :name %>
-              <%= question_f.text_field :name, autofocus: true %>
-            </fieldset>
-
-            <fieldset class="field field--stacked">
-              <%= question_f.label :description %>
-              <%=
-                question_f.text_area :description, autofocus: true,
-                  style: "resize: vertical; min-height: 50px"
-              %>
-            </fieldset>
-
-            <fieldset class="field field--stacked">
-              <%= question_f.label :value_type %>
-              <%= question_f.select :value_type, Question.value_types %>
-            </fieldset>
-
-            <fieldset class="field">
-              <%= question_f.check_box :is_emptyable %>
-              <%= question_f.label :is_emptyable, class: "checkable" %>
-            </fieldset>
-
-            <fieldset class="field">
-              <%= f.button "remove", class: "button", type: :button, data: { behaviour: 'remove-question-form' } %>
-            </fieldset>
-          <% end %>
-        </div>
-      </template>
-    </section>
-
     <div class="actions">
       <%= f.submit "create questionnaire", class: "button" %>
     </div>

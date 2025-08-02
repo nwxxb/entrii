@@ -15,8 +15,9 @@ $(document).on('change', '.field__dropimage', function(e) {
 $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 	e.preventDefault();
 
-	var $questionFormTemplate = $(this).siblings('template[data-target="question-form-template"]');
-	var $questionsWrapper = $(this).siblings('section[data-target="questions-wrapper"]');
+	var $formParent = $(this).closest('form');
+	var $questionFormTemplate = $formParent.children('template[data-target="question-form-template"]')
+	var $questionsWrapper = $formParent.children('section[data-target="questions-wrapper"]')
 
 	var $questionForm = $($questionFormTemplate.html());
 	var newId = new Date().getTime();
@@ -35,8 +36,10 @@ $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 		}
 	});
 
-	$questionForm.clone().appendTo($questionsWrapper);
+	$clonedQuestionForm = $questionForm.clone().appendTo($questionsWrapper);
 	updateCardQuestionPositionValue();
+
+	$clonedQuestionForm.find('input:visible').first().trigger("focus");
 });
 
 $(document).on('click', '[data-behaviour="remove-question-form"]', function(e) {
