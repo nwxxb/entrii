@@ -23,12 +23,18 @@ Rails.application.configure do
   }
 
   # Show full error reports and disable caching.
+  # also see spec/support/error_responses.rb
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
   # Raise exceptions instead of rendering exception templates.
+  #   please use helper defined in ./spec/support/error_responses.rb
+  #   to make rails handle the exceptions and show the error/debug page
   config.action_dispatch.show_exceptions = false
+
+  # use ErrorsController to serve the error page
+  config.exceptions_app = routes
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false

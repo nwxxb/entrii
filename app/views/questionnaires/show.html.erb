@@ -1,0 +1,14 @@
+<div class="card card--no-line">
+  <h1><%= @questionnaire.title %></h1>
+  <p><%= @questionnaire.description %></p>
+</div>
+
+<%= render 'questionnaires/subnavbar' %>
+
+<div class="card">
+  <% @questionnaire.questions.each do |question| %>
+    <fieldset class="field">
+      <%= question.name %>
+    </fieldset>
+  <% end %>
+</div>

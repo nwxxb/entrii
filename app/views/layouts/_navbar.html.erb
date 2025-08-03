@@ -1,17 +1,27 @@
-<nav style="position: static;">
-  <div class="brand">
-    Entrii
+<nav class="nav">
+  <div class="nav__brand">
+    <svg width="10.902mm" height="9.4499mm" version="1.1" fill="currentColor" viewBox="0 0 10.902 9.4499" xmlns="http://www.w3.org/2000/svg">
+     <g transform="translate(-66.075 -90.557)">
+      <path transform="matrix(.26458 0 0 .26458 66.075 90.557)" d="m31.188 1.5117v4.7734h-4.8574v.98438h-3.6582v-1.0645h-21.16v28h21.68v-.75195h9.625a.49741.49741 0 00.49414-.49414v-12.594-5.8828h1.498v-4.7734h4.8848v-3.4238h-4.8848v-4.7734h-3.6211zm-8.5156 6.7559h3.6582v1.4414h4.8574v4.7734h1.127v5.3809h-11.363v-2.3789h-12.842v-6.0801h14.562v-3.1367zm-1.7207 12.594h11.363v11.604h-9.123v-3.4609h-15.082v-6.4805h12.842v-1.6621z"/>
+     </g>
+    </svg>
   </div>
-  <div class="menu">
+  <div class="nav__menu">
   <% if user_signed_in? %>
-    <%= link_to 'profile', user_profile_path %>
-    <%= link_to 'sign out', destroy_user_session_path, id: "user_sign_out", data: { turbo_method: :delete } %>
+    <%= link_to 'questionnaires', questionnaires_path, class: "button" %>
+    <%= link_to 'profile', user_profile_path, class: "button" %>
+    <%= link_to 'sign out', destroy_user_session_path, id: "user_sign_out", class: "button", data: { turbo_method: :delete } %>
   <% else %>
-    <% if !current_page?(new_user_session_path) %>
-      <%= link_to 'sign in', new_user_session_path %>
-    <% end %>
     <% if !current_page?(new_user_registration_path) %>
-      <%= link_to 'sign up', new_user_registration_path %>
+      <%= link_to new_user_registration_path, class: 'button' do %>
+        <span>sign up</span>
+      <% end %>
+    <% end %>
+    <% if !current_page?(new_user_session_path) %>
+      <%= link_to new_user_session_path, class: 'button' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/></svg>
+        <span>sign in</span>
+      <% end %>
     <% end %>
   <% end %>
   </div>
