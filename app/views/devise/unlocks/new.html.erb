@@ -1,18 +1,20 @@
 <h1>resend unlock instructions</h1>
 
 <div class="card">
+  <footer>
   <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="field field--stacked">
+    <div class="field">
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
     </div>
 
     <div class="actions">
-      <%= f.submit "resend unlock instructions", class: "button" %>
-      <%= render "devise/shared/links" %>
+      <%= f.submit "resend unlock instructions" %>
     </div>
   <% end %>
+  </footer>
 </div>
 
+<%= render "devise/shared/links" %>

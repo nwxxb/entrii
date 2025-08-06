@@ -11,13 +11,8 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # show the actual error page
-  config.consider_all_requests_local = false
-  # uncomment this and comment above config if you want to see the detailed debug page
-  # config.consider_all_requests_local = true
-
-  # use ErrorsController to serve the error page
-  config.exceptions_app = routes
+  # Show full error reports.
+  config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
