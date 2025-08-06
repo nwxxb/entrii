@@ -1,17 +1,18 @@
 <h1>edit</h1>
 
 <div class="card">
+  <footer>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <fieldset class="field field--stacked">
+    <fieldset class="field" style="width: 100px;">
       <% avatar_background_image_css = "background-image: url(#{url_for(current_user.avatar&.variant(resize_to_limit: [100, 100]))});" if current_user.avatar.attached? %>
-      <%= f.label :avatar, id: "user_avatar_input", class: "field__dropimage", style: "#{avatar_background_image_css}" do %>
+      <%= f.label :avatar, class: "dropimage", style: "padding-bottom: 100%; #{avatar_background_image_css}" do %>
         <%= f.file_field :avatar, autofocus: true, accept: "image/png, image/jpeg", title: "click or drop image to change photo profile" %>
       <% end %>
     </fieldset>
 
-    <fieldset class="field field--stacked">
+    <fieldset class="field">
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
     </fieldset>
@@ -20,37 +21,37 @@
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
 
-    <fieldset class="field field--stacked">
-      <%= f.label :password do %>
-        Password
-        <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %>
+    <fieldset class="field">
+      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+      <%= f.password_field :password, autocomplete: "new-password" %>
+      <% if @minimum_password_length %>
+        <em><%= @minimum_password_length %> characters minimum</em>
       <% end %>
-      <%= f.password_field :password, autocomplete: "new-password", placeholder: "leave blank if you don't want to change it" %>
     </fieldset>
 
-    <fieldset class="field field--stacked">
+    <fieldset class="field">
       <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "leave blank if you don't want to change it" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </fieldset>
 
-    <fieldset class="field field--stacked">
-      <%= f.label :current_password do %>
-        Current Password
-        <i>(we need your current password to confirm your changes)</i>
-      <% end %>
+    <fieldset class="field">
+      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
       <%= f.password_field :current_password, autocomplete: "current-password", required: true %>
     </fieldset>
 
-    <div class="actions">
-      <%= f.submit "update", class: "button" %>
+    <fieldset class="actions">
+      <%= f.submit "update" %>
       <%= link_to "back", :back, class: "button" %>
-    </div>
+    </fieldset>
   <% end %>
+  </footer>
 </div>
 
 <div class="card">
-  <h3>cancel my account</h3>
-  <p>Unhappy? <%= link_to "delete account", registration_path(resource_name), class: "button button--danger", id: 'user_destroy', data: { turbo_method: :delete, turbo_confirm: "are you sure?" } %></p>
+  <header>
+    <h3>cancel my account</h3>
+  </header>
+  <footer>
+    <div>Unhappy? <%= link_to "delete account", registration_path(resource_name), class: "button error", id: 'user_destroy', data: { turbo_method: :delete, turbo_confirm: "are you sure?" } %></div>
+  </footer>
 </div>

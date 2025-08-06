@@ -11,27 +11,32 @@
     <%= javascript_pack_tag 'application' %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   </head>
 
-  <body class="application-layout" data-turbo-prefetch="false">
+  <body style="margin: 0;">
     <%= render 'layouts/navbar' %>
-    <main class="application-mainview">
+    <main>
       <% if notice %>
-        <div class="alert alert--info">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/></svg>
-          <p><%= notice %></p>
+      <div class="flex one center two-700" style="padding: 0px 16px; margin: 8px 0px;">
+        <div class="notice card">
+          <header><%= fa_icon "check-square" %> <%= notice %></header>
         </div>
+      </div>
       <% end %>
 
       <% if alert %>
-        <div class="alert alert--warning">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z"/></svg>
-          <p><%= alert %></p>
+      <div class="flex one center two-700" style="padding: 0px 16px; margin: 8px 0px;">
+        <div class="alert card">
+          <header><%= fa_icon "warning" %> <%= alert %></header>
         </div>
+      </div>
       <% end %>
 
-      <div>
-        <%= yield %>
+      <div class="flex one center two-700" style="padding: 0px 16px;">
+        <div>
+          <%= yield %>
+        </div>
       </div>
     </main>
   </body>

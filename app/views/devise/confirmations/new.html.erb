@@ -1,18 +1,20 @@
 <h1>resend confirmation instructions</h1>
 
 <div class="card">
+  <footer>
   <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
-    <fieldset class="field field--stacked">
+    <fieldset class="field">
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
     </fieldset>
 
-    <div class="actions">
-      <%= f.submit "resend confirmation instructions", class: "button" %>
-      <%= render "devise/shared/links" %>
-    </div>
+    <fieldset class="actions">
+      <%= f.submit "resend confirmation instructions" %>
+    </fieldset>
   <% end %>
+  </footer>
 </div>
 
+<%= render "devise/shared/links" %>
