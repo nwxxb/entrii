@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
   validates :avatar, blob: {content_type: :image, size_range: 1..(10.megabytes)}
+
+  has_many :questionnaires
 end
