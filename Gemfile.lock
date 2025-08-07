@@ -101,6 +101,8 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     ferrum (0.17.1)
       addressable (~> 2.5)
       base64 (~> 0.2)
@@ -343,6 +345,7 @@ DEPENDENCIES
   cuprite
   devise
   factory_bot_rails
+  faker
   font-awesome-rails
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
