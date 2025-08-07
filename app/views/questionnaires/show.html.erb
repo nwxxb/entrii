@@ -5,10 +5,23 @@
 
 <%= render 'questionnaires/subnavbar' %>
 
-<div class="card">
-  <% @questionnaire.questions.each do |question| %>
-    <fieldset class="field">
-      <%= question.name %>
-    </fieldset>
-  <% end %>
+<div class="card" style="overflow: scroll;">
+  <table>
+    <tr>
+      <% @questionnaire.questions.each do |question| %>
+        <th><%= question.name %></th>
+      <% end %>
+    </tr>
+    <% @questionnaire.submissions.each do |submission| %>
+      <tr>
+        <% submission.submission_values.each do |submission_value| %>
+          <td><%= submission_value.value %></td>
+        <% end %>
+        <td style="display: flex; gap: 2px;">
+          <button class="button">edit</button>
+          <button class="button">remove</button>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 </div>
