@@ -18,7 +18,7 @@
           <td><%= submission_value.value %></td>
         <% end %>
         <td style="display: flex; gap: 2px;">
-          <button class="button">edit</button>
+          <%= link_to "edit", edit_questionnaire_submission_path(@questionnaire, submission), class: "button" %>
           <button class="button">remove</button>
         </td>
       </tr>

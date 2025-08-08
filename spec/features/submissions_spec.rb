@@ -25,7 +25,7 @@ RSpec.feature "Questions", :js do
 
     first("button, a", text: "log new data").click
 
-    expect(page).to have_current_path(new_questionnaire_submissions_path(questionnaire))
+    expect(page).to have_current_path(new_questionnaire_submission_path(questionnaire))
 
     expect(page).to have_content(questionnaire.title)
     expect(page).to have_content(questionnaire.description)
@@ -68,7 +68,7 @@ RSpec.feature "Questions", :js do
 
     first("button, a", text: "log new data").click
 
-    expect(page).to have_current_path(new_questionnaire_submissions_path(questionnaire))
+    expect(page).to have_current_path(new_questionnaire_submission_path(questionnaire))
 
     expect(page).to have_content(questionnaire.title)
     expect(page).to have_content(questionnaire.description)
@@ -81,7 +81,7 @@ RSpec.feature "Questions", :js do
       find("[type='submit']").click
     end
 
-    expect(page).to have_current_path(new_questionnaire_submissions_path(questionnaire))
+    expect(page).to have_current_path(new_questionnaire_submission_path(questionnaire))
     expect(page).to have_content(questionnaire.title)
     expect(page).to have_content("can't be blank")
     expect(page).to have_content("not a number")
