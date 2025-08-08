@@ -18,6 +18,22 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def edit
+    @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
+    @submission = @questionnaire.submissions.find(params[:id])
+  end
+
+  def update
+    @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
+    @submission = @questionnaire.submissions.find(params[:id])
+
+    if @submission.update(submission_params)
+      redirect_to questionnaire_path(@questionnaire)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def submission_params

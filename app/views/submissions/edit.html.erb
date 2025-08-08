@@ -1,0 +1,33 @@
+<div class="card card--no-line">
+  <h1><%= @questionnaire.title %></h1>
+  <p><%= @questionnaire.description %></p>
+</div>
+
+<%= render 'questionnaires/subnavbar' %>
+
+<div class="card">
+  <%= form_with(model: @submission, url: questionnaire_submission_path(@questionnaire, @submission), method: :put) do |f| %>
+      <%= f.fields_for :submission_values do |submission_values_f| %>
+        <fieldset class="field field--stacked">
+          <% question = submission_values_f.object.question %>
+          <%= submission_values_f.hidden_field :question_id, value: question.id %>
+          <%= submission_values_f.label :value do %>
+            <%= question.name %>
+            <% if submission_values_f.object.errors.any? %>
+              <em>(<%= submission_values_f.object.errors[:value].join("; ") %>)</em>
+            <% end %>
+          <% end %>
+          <% if question.text? %>
+            <%= submission_values_f.text_field :value %>
+          <% elsif question.number? %>
+            <%= submission_values_f.number_field :value %>
+          <% end %>
+        </fieldset>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "update submission", class: "button" %>
+      <%= link_to "back", questionnaire_path(@questionnaire), class: "button" %>
+    </div>
+  <% end %>
+</div>

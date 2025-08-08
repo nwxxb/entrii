@@ -86,4 +86,49 @@ RSpec.feature "Questions", :js do
     expect(page).to have_content("can't be blank")
     expect(page).to have_content("not a number")
   end
+
+  it "user can edit submitted record" do
+    user = create(:user)
+    questionnaire = create(:questionnaire, user: user)
+
+    question1 = create(:question, :text, name: "name", questionnaire: questionnaire, position: 1)
+    question2 = create(:question, :number, name: "count", questionnaire: questionnaire, position: 2)
+
+    submission1 = create(:submission, questionnaire: questionnaire) do |submission|
+      create(:submission_value, question: question1, submission: submission)
+      create(:submission_value, question: question2, submission: submission)
+    end
+
+    create(:submission, questionnaire: questionnaire) do |submission|
+      create(:submission_value, question: question1, submission: submission)
+      create(:submission_value, question: question2, submission: submission)
+    end
+
+    new_text_submission_value = build(:submission_value, value: "new updated value")
+    new_number_submission_value = build(:submission_value, value: "1234567890")
+
+    sign_in(user)
+
+    visit questionnaire_path(questionnaire)
+
+    find(:table_row, {question1.name => submission1.submission_values.first.value}).find("button, a", text: "edit").click
+
+    expect(page).to have_current_path(edit_questionnaire_submission_path(questionnaire, submission1))
+    expect(page).to have_link(href: questionnaire_path(questionnaire))
+
+    within(:element, "form", action: questionnaire_submission_path(questionnaire, submission1)) do
+      find(:fillable_field, with: submission1.submission_values.first.value).fill_in with: new_text_submission_value.value
+      find(:fillable_field, with: submission1.submission_values.last.value).fill_in with: new_number_submission_value.value
+
+      find("[type='submit']").click
+    end
+
+    expect(page).to have_current_path(questionnaire_path(questionnaire))
+    expect(page).to have_content(questionnaire.title)
+    expect(page).to have_table(with_rows: [
+      [question1, question2].zip(submission1.submission_values).to_h { |pair| [pair.first.name, pair.second.value] }
+    ])
+
+    expect(page).to have_selector("tbody > tr", count: 2)
+  end
 end
