@@ -5,10 +5,27 @@
 
 <%= render 'questionnaires/subnavbar' %>
 
-<div class="card">
-  <% @questionnaire.questions.each do |question| %>
-    <fieldset class="field">
-      <%= question.name %>
-    </fieldset>
-  <% end %>
+<div class="card" style="max-height: 80vh; overflow: scroll;">
+  <table>
+    <thead>
+    <tr>
+      <% @questionnaire.questions.each do |question| %>
+        <th><%= question.name %></th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <% @questionnaire.submissions.each do |submission| %>
+      <tr>
+        <% submission.submission_values.each do |submission_value| %>
+          <td><%= submission_value.value %></td>
+        <% end %>
+        <td style="display: flex; gap: 2px;">
+          <%= link_to "edit", edit_questionnaire_submission_path(@questionnaire, submission), class: "button" %>
+          <%= link_to "remove", questionnaire_submission_path(@questionnaire, submission), class: "button", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>

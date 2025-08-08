@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_07_24_083125) do
+ActiveRecord::Schema.define(version: 2025_08_06_092320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,23 @@ ActiveRecord::Schema.define(version: 2025_07_24_083125) do
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
+  create_table "submission_values", force: :cascade do |t|
+    t.bigint "submission_id", null: false
+    t.json "value"
+    t.bigint "question_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_submission_values_on_question_id"
+    t.index ["submission_id"], name: "index_submission_values_on_submission_id"
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.bigint "questionnaire_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["questionnaire_id"], name: "index_submissions_on_questionnaire_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -80,4 +97,7 @@ ActiveRecord::Schema.define(version: 2025_07_24_083125) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
+  add_foreign_key "submission_values", "questions"
+  add_foreign_key "submission_values", "submissions"
+  add_foreign_key "submissions", "questionnaires"
 end

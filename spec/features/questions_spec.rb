@@ -29,15 +29,18 @@ RSpec.feature "Questions", :js do
 
     first("button, a", text: "edit structure").click
 
+    expect(page).to have_current_path(edit_questionnaire_questions_path(questionnaire))
+
     expect(page).to have_content(questionnaire.title)
     expect(page).to have_content(questionnaire.description)
 
     within("form[action='#{questionnaire_questions_path(questionnaire)}']") do
       existing_questions.each.with_index do |existing_question, index|
-        find("input[name='questionnaire[questions_attributes][#{index}][name]']").fill_in with: existing_question.name + "_updated"
-        find("textarea[name='questionnaire[questions_attributes][#{index}][description]']").fill_in with: existing_question.description
-        find("select[name='questionnaire[questions_attributes][#{index}][value_type]']").select existing_question.value_type
-        find("label[for='questionnaire_questions_attributes_#{index}_is_emptyable']").click
+        question_form = find("input[name*='[id]'][value='#{existing_question.id}']", visible: :hidden).ancestor("div.question-form")
+        question_form.find("input[name^='questionnaire[questions_attributes]'][name$='[name]']").fill_in with: existing_question.name + "_updated"
+        question_form.find("textarea[name^='questionnaire[questions_attributes]'][name$='[description]']").fill_in with: existing_question.description
+        question_form.find("select[name^='questionnaire[questions_attributes]'][name$='[value_type]']").select existing_question.value_type
+        question_form.find("label[for^='questionnaire_questions_attributes'][for$='_is_emptyable']").click
       end
 
       new_questions.each do |new_question|
@@ -123,7 +126,7 @@ RSpec.feature "Questions", :js do
 
     expect(page).to have_current_path(questionnaire_path(questionnaire))
     expect(page).to have_content(questionnaire.title)
-    texts = all("fieldset.field").map(&:text)
+    texts = all("th").map(&:text)
     expect(texts).to eq([
       existing_questions2.name,
       existing_questions1.name,
