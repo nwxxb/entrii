@@ -22,7 +22,7 @@
         <% end %>
         <td style="display: flex; gap: 2px;">
           <%= link_to "edit", edit_questionnaire_submission_path(@questionnaire, submission), class: "button" %>
-          <button class="button">remove</button>
+          <%= link_to "remove", questionnaire_submission_path(@questionnaire, submission), class: "button", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
         </td>
       </tr>
     <% end %>

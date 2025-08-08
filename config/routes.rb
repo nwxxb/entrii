@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       delete ":id", to: "questions#destroy"
     end
 
-    resources :submissions, only: [:new, :create, :edit, :update]
+    resources :submissions
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "homes#landing_page"

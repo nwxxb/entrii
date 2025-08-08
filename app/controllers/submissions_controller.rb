@@ -34,6 +34,14 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def destroy
+    @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
+    @submission = @questionnaire.submissions.find(params[:id])
+
+    @submission.destroy!
+    redirect_to questionnaire_path(@questionnaire)
+  end
+
   private
 
   def submission_params

@@ -131,4 +131,40 @@ RSpec.feature "Questions", :js do
 
     expect(page).to have_selector("tbody > tr", count: 2)
   end
+
+  it "user can remove submitted submission" do
+    user = create(:user)
+    questionnaire = create(:questionnaire, user: user)
+
+    question1 = create(:question, :text, name: "name", questionnaire: questionnaire, position: 1)
+    question2 = create(:question, :number, name: "count", questionnaire: questionnaire, position: 2)
+
+    deleted_submission = create(:submission, questionnaire: questionnaire) do |submission|
+      create(:submission_value, question: question1, submission: submission)
+      create(:submission_value, question: question2, submission: submission)
+    end
+    deleted_submission_values = deleted_submission.submission_values.map(&:value)
+
+    submission2 = create(:submission, questionnaire: questionnaire) do |submission|
+      create(:submission_value, question: question1, submission: submission)
+      create(:submission_value, question: question2, submission: submission)
+    end
+
+    sign_in(user)
+
+    visit questionnaire_path(questionnaire)
+
+    accept_prompt do
+      find(:table_row, {question1.name => deleted_submission.submission_values.first.value}).find("button, a", text: "remove").click
+    end
+
+    expect(page).to have_current_path(questionnaire_path(questionnaire))
+    expect(page).to have_table(with_rows: [
+      [question1, question2].zip(submission2.submission_values).to_h { |pair| [pair.first.name, pair.second.value] }
+    ])
+    expect(page).not_to have_table(with_rows: [
+      [question1, question2].zip(deleted_submission_values).to_h { |pair| [pair.first.name, pair.second] }
+    ])
+    expect(page).to have_selector("tbody > tr", count: 1)
+  end
 end
