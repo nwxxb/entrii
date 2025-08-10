@@ -36,5 +36,9 @@ module Entrii
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # we use composite foreign key and rails default format
+    # seems to have problem with it
+    config.active_record.schema_format = :sql
   end
 end
