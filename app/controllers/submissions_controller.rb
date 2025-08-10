@@ -46,6 +46,6 @@ class SubmissionsController < ApplicationController
 
   def submission_params
     params.require(:submission)
-      .permit(submission_values_attributes: [:question_id, :value])
+      .permit(submission_values_attributes: [:id, :question_id, :value])
   end
 end
