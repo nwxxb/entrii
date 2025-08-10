@@ -8,7 +8,8 @@ FactoryBot.define do
       end
     end
 
-    association :submission, factory: :submission
-    association :question, factory: :question
+    questionnaire { association :questionnaire }
+    submission { association :submission, questionnaire: questionnaire }
+    question { association :question, questionnaire: questionnaire }
   end
 end

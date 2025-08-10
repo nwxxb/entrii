@@ -95,13 +95,13 @@ RSpec.feature "Questions", :js do
     question2 = create(:question, :number, name: "count", questionnaire: questionnaire, position: 2)
 
     submission1 = create(:submission, questionnaire: questionnaire) do |submission|
-      create(:submission_value, question: question1, submission: submission)
-      create(:submission_value, question: question2, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question1, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question2, submission: submission)
     end
 
     create(:submission, questionnaire: questionnaire) do |submission|
-      create(:submission_value, question: question1, submission: submission)
-      create(:submission_value, question: question2, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question1, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question2, submission: submission)
     end
 
     new_text_submission_value = build(:submission_value, value: "new updated value")
@@ -140,14 +140,14 @@ RSpec.feature "Questions", :js do
     question2 = create(:question, :number, name: "count", questionnaire: questionnaire, position: 2)
 
     deleted_submission = create(:submission, questionnaire: questionnaire) do |submission|
-      create(:submission_value, question: question1, submission: submission)
-      create(:submission_value, question: question2, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question1, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question2, submission: submission)
     end
     deleted_submission_values = deleted_submission.submission_values.map(&:value)
 
     submission2 = create(:submission, questionnaire: questionnaire) do |submission|
-      create(:submission_value, question: question1, submission: submission)
-      create(:submission_value, question: question2, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question1, submission: submission)
+      create(:submission_value, questionnaire: questionnaire, question: question2, submission: submission)
     end
 
     sign_in(user)
