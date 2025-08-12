@@ -15,4 +15,5 @@ class Questionnaire < ApplicationRecord
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   has_many :submissions
+  has_many :submission_values
 end
