@@ -133,6 +133,7 @@ RSpec.feature "Questions", :js do
       new_question1.name,
       existing_questions3.name
     ])
+    expect(page).to have_table(rows: [])
   end
 
   xit "user can upload a csv to generate the questionnaire structure"

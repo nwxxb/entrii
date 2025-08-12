@@ -6,11 +6,11 @@ RSpec.feature "Questions", :js do
     questionnaire = create(:questionnaire, user: user)
 
     questions = [
-      create(:question, questionnaire: questionnaire, position: 0),
-      create(:question, :text, name: "name", questionnaire: questionnaire, position: 12),
-      create(:question, :number, name: "naps amount", questionnaire: questionnaire, position: 12),
-      create(:question, :number, name: "naps count", questionnaire: questionnaire, position: 12),
-      create(:question, :number, name: "rating", questionnaire: questionnaire, position: 999)
+      create(:question, :text, questionnaire: questionnaire, position: 0),
+      create(:question, :number, questionnaire: questionnaire, position: 12),
+      create(:question, :text, questionnaire: questionnaire, position: 12),
+      create(:question, :number, questionnaire: questionnaire, position: 12),
+      create(:question, :text, questionnaire: questionnaire, position: 999)
     ]
 
     submission_values = questions.map do |question|
@@ -40,9 +40,7 @@ RSpec.feature "Questions", :js do
 
     expect(page).to have_current_path(questionnaire_path(questionnaire))
     expect(page).to have_content(questionnaire.title)
-    expect(page).to have_table(with_rows: [
-      questions.zip(submission_values).to_h { |pair| [pair.first.name, pair.second.value] }
-    ])
+    expect(page).to have_selector(:table_row, questions.zip(submission_values).to_h { |pair| [pair.first.name, pair.second.value] })
     expect(page).not_to have_content(nonexisting_question.name)
   end
 
@@ -91,8 +89,9 @@ RSpec.feature "Questions", :js do
     user = create(:user)
     questionnaire = create(:questionnaire, user: user)
 
-    question1 = create(:question, :text, name: "name", questionnaire: questionnaire, position: 1)
-    question2 = create(:question, :number, name: "count", questionnaire: questionnaire, position: 2)
+    question1 = create(:question, :text, questionnaire: questionnaire, position: 1)
+    question2 = create(:question, :number, questionnaire: questionnaire, position: 2)
+    question3 = create(:question, :text, questionnaire: questionnaire, position: 3)
 
     submission1 = create(:submission, questionnaire: questionnaire) do |submission|
       create(:submission_value, questionnaire: questionnaire, question: question1, submission: submission)
@@ -104,8 +103,9 @@ RSpec.feature "Questions", :js do
       create(:submission_value, questionnaire: questionnaire, question: question2, submission: submission)
     end
 
-    new_text_submission_value = build(:submission_value, value: "new updated value")
-    new_number_submission_value = build(:submission_value, value: "1234567890")
+    question1_submission_value = build(:submission_value, value: "new updated value")
+    question2_submission_value = build(:submission_value, value: "1234567890")
+    question3_submission_value = build(:submission_value, value: "new updated value 2")
 
     sign_in(user)
 
@@ -117,8 +117,9 @@ RSpec.feature "Questions", :js do
     expect(page).to have_link(href: questionnaire_path(questionnaire))
 
     within(:element, "form", action: questionnaire_submission_path(questionnaire, submission1)) do
-      find(:fillable_field, with: submission1.submission_values.first.value).fill_in with: new_text_submission_value.value
-      find(:fillable_field, with: submission1.submission_values.last.value).fill_in with: new_number_submission_value.value
+      find(:fillable_field, with: submission1.submission_values.first.value).fill_in with: question1_submission_value.value
+      find(:fillable_field, with: submission1.submission_values.last.value).fill_in with: question2_submission_value.value
+      find(:fillable_field, with: "").fill_in with: question3_submission_value.value
 
       find("[type='submit']").click
     end
@@ -126,7 +127,7 @@ RSpec.feature "Questions", :js do
     expect(page).to have_current_path(questionnaire_path(questionnaire))
     expect(page).to have_content(questionnaire.title)
     expect(page).to have_table(with_rows: [
-      [question1, question2].zip(submission1.submission_values).to_h { |pair| [pair.first.name, pair.second.value] }
+      [question1, question2, question3].zip(submission1.submission_values).to_h { |pair| [pair.first.name, pair.second.value] }
     ])
 
     expect(page).to have_selector("tbody > tr", count: 2)
