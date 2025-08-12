@@ -17,7 +17,7 @@
     <tbody>
     <% @questionnaire.submissions.each do |submission| %>
       <tr>
-        <% submission.submission_values.each do |submission_value| %>
+        <% submission.whole_submission_values.each do |submission_value| %>
           <td><%= submission_value.value %></td>
         <% end %>
         <td style="display: flex; gap: 2px;">

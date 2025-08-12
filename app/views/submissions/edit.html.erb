@@ -7,7 +7,7 @@
 
 <div class="card">
   <%= form_with(model: @submission, url: questionnaire_submission_path(@questionnaire, @submission), method: :put) do |f| %>
-      <%= f.fields_for :submission_values do |submission_values_f| %>
+      <%= f.fields_for :submission_values, @submission.whole_submission_values do |submission_values_f| %>
         <fieldset class="field field--stacked">
           <% question = submission_values_f.object.question %>
           <%= submission_values_f.hidden_field :id, value: submission_values_f.object.id %>
