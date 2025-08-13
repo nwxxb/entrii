@@ -139,6 +139,13 @@ h4, h5, h6 {
   }
 }
 
+.mini-label {
+  font-size: var(--font-size-1);
+  padding: 1px 3px;
+  background-color: var(--surface-1);
+  filter: brightness(60%);
+}
+
 .profile__image {
   inline-size: 100px;
   aspect-ratio: var(--ratio-square);

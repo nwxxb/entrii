@@ -12,7 +12,7 @@
           <% question = submission_values_f.object.question %>
           <%= submission_values_f.hidden_field :question_id, value: question.id %>
           <%= submission_values_f.label :value do %>
-            <%= question.name %>
+            <%= question.name %> <span class="mini-label"><%= question.value_type %></span>
             <% if submission_values_f.object.errors.any? %>
               <em>(<%= submission_values_f.object.errors[:value].join("; ") %>)</em>
             <% end %>
