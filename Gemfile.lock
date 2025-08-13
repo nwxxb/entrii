@@ -94,6 +94,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.6.2)
+    discard (1.4.0)
+      activerecord (>= 4.2, < 9.0)
     docile (1.4.1)
     erubi (1.13.1)
     factory_bot (6.4.5)
@@ -344,6 +346,7 @@ DEPENDENCIES
   concurrent-ruby (= 1.3.4)
   cuprite
   devise
+  discard (~> 1.4)
   factory_bot_rails
   faker
   font-awesome-rails

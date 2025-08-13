@@ -7,7 +7,7 @@ class Submission < ApplicationRecord
     existing_submission_values = submission_values.index_by { |sv| [sv.submission_id, sv.question_id] }
 
     result = []
-    questionnaire.questions.each do |q|
+    questionnaire.questions.kept.each do |q|
       key = [id, q.id]
 
       result << (existing_submission_values[key] || SubmissionValue.new(
