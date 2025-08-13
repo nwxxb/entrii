@@ -82,7 +82,6 @@ RSpec.feature "Questions", :js do
     expect(page).to have_current_path(new_questionnaire_submission_path(questionnaire))
     expect(page).to have_content(questionnaire.title)
     expect(page).to have_content("can't be blank")
-    expect(page).to have_content("not a number")
   end
 
   it "user can edit submitted record" do

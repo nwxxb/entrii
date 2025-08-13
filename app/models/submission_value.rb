@@ -4,7 +4,6 @@ class SubmissionValue < ApplicationRecord
   belongs_to :question
 
   validates :value, presence: {unless: :is_emptyable?}
-  validates :value, numericality: true, if: :number?
 
   after_initialize :set_questionnaire_defaults
 
