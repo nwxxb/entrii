@@ -17,11 +17,7 @@
               <em>(<%= submission_values_f.object.errors[:value].join("; ") %>)</em>
             <% end %>
           <% end %>
-          <% if question.text? %>
-            <%= submission_values_f.text_field :value %>
-          <% elsif question.number? %>
-            <%= submission_values_f.number_field :value %>
-          <% end %>
+          <%= submission_values_f.text_field :value %>
         </fieldset>
     <% end %>
 
