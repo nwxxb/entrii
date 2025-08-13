@@ -17,7 +17,7 @@
               <em>(<%= submission_values_f.object.errors[:value].join("; ") %>)</em>
             <% end %>
           <% end %>
-          <%= submission_values_f.text_field :value %>
+          <%= submission_values_f.text_field :value, pattern: question.valid_pattern %>
         </fieldset>
     <% end %>
 
