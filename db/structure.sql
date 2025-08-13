@@ -224,7 +224,8 @@ CREATE TABLE public.questions (
     "position" integer NOT NULL,
     questionnaire_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    discarded_at timestamp without time zone
 );
 
 
@@ -528,6 +529,13 @@ CREATE INDEX index_questionnaires_on_user_id ON public.questionnaires USING btre
 
 
 --
+-- Name: index_questions_on_discarded_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_questions_on_discarded_at ON public.questions USING btree (discarded_at);
+
+
+--
 -- Name: index_questions_on_questionnaire_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -683,6 +691,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250806092153'),
 ('20250806092320'),
 ('20250809030422'),
-('20250809035157');
+('20250809035157'),
+('20250813040421');
 
 

@@ -1,5 +1,17 @@
 class Question < ApplicationRecord
+  include Discard::Model
+
   belongs_to :questionnaire
+  has_many :submission_values
+
+  def mark_for_destruction
+    if submission_values.any?
+      discard!
+      @marked_for_destruction = false
+    else
+      @marked_for_destruction = true
+    end
+  end
 
   validates :name,
     presence: true,
