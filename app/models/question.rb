@@ -25,4 +25,13 @@ class Question < ApplicationRecord
 
   validates :value_type, presence: true
   enum value_type: {text: "text", number: "number"}, _default: "text"
+
+  # unfortunately, we can't use ruby's regex (even with to_s)
+  def valid_pattern
+    if number?
+      '\d*'
+    else
+      '[\w-&\(\)]*'
+    end
+  end
 end
