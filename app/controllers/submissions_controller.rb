@@ -2,7 +2,7 @@ class SubmissionsController < ApplicationController
   def new
     @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
     @submission = @questionnaire.submissions.new
-    @questionnaire.questions.each do |question|
+    @questionnaire.questions.kept.each do |question|
       @submission.submission_values.new(question: question)
     end
   end

@@ -9,7 +9,7 @@
   <table>
     <thead>
     <tr>
-      <% @questionnaire.questions.each do |question| %>
+      <% @questionnaire.questions.kept.each do |question| %>
         <th><%= question.name %></th>
       <% end %>
     </tr>
