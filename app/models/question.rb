@@ -31,7 +31,7 @@ class Question < ApplicationRecord
     if number?
       '\d*'
     else
-      '[\w-&\(\)]*'
+      '[\w\-&\(\)]*'
     end
   end
 end
