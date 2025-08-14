@@ -83,3 +83,42 @@ function updateCardQuestionPositionValue() {
 		})
 	}
 }
+
+$(document).on('click', '[data-behaviour="show-questions-preview"]', function(e) {
+	var $questionsPreviewWrapper = $('[data-target="questions-preview-wrapper"]')
+	var $questionPreviewTemplate = $($('[data-target="question-preview-template"').html());
+	var $fieldsets = $('[data-target="questions-wrapper"]').children('.question-form:visible');
+
+	$questionsPreviewWrapper.empty()
+
+	if ($fieldsets.length > 0) {
+		$fieldsets.each(function(idx) {
+			var name = $(this).find('input[name$="[name]"]').val();
+			if (name === '') {
+				return;
+			}
+			var valueType = $(this).find('select[name$="[value_type]"]').val();
+			var isEmptyable = $(this).find('input[name$="[is_emptyable]"]').val();
+			$clonedQuestionPreviewTemplate = $questionPreviewTemplate.clone()
+
+			$clonedQuestionPreviewTemplate.find('p').text(name);
+			$clonedQuestionPreviewTemplate.find('p').append(
+				'<span class="mini-label">' + valueType + '</span>'
+			);
+			if (isEmptyable == '0') {
+				$clonedQuestionPreviewTemplate.find('p').append(
+					'<span class="mini-label">required</span>'
+				);
+			}
+
+			$clonedQuestionPreviewTemplate.appendTo($questionsPreviewWrapper);
+		})
+
+		$questionsPreviewWrapper.closest('.modal').fadeIn(200);
+	}
+})
+
+$(document).on('click', '.modal', function(e) {
+	console.log('clicked');
+	$(this).fadeOut(200);
+})
