@@ -6,26 +6,43 @@
 <%= render 'questionnaires/subnavbar' %>
 
 <div class="card" style="max-height: 80vh; overflow: scroll;">
-  <table>
-    <thead>
-    <tr>
-      <% @questionnaire.questions.kept.each do |question| %>
-        <th><%= question.name %></th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-    <% @questionnaire.submissions.each do |submission| %>
+  <% if @questionnaire.questions.present? %>
+    <table>
+      <thead>
       <tr>
-        <% submission.whole_submission_values.each do |submission_value| %>
-          <td><%= submission_value.value %></td>
+        <% @questionnaire.questions.kept.each do |question| %>
+          <th><%= question.name %></th>
         <% end %>
-        <td style="display: flex; gap: 2px;">
-          <%= link_to "edit", edit_questionnaire_submission_path(@questionnaire, submission), class: "button" %>
-          <%= link_to "remove", questionnaire_submission_path(@questionnaire, submission), class: "button", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-        </td>
       </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      <% @questionnaire.submissions.each do |submission| %>
+        <tr>
+          <% submission.whole_submission_values.each do |submission_value| %>
+            <td><%= submission_value.value %></td>
+          <% end %>
+          <td style="display: flex; gap: 2px;">
+            <%= link_to "edit", edit_questionnaire_submission_path(@questionnaire, submission), class: "button" %>
+            <%= link_to "remove", questionnaire_submission_path(@questionnaire, submission), class: "button", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="card card--ghost">
+      <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="currentColor"><path d="M186.67-813.33V-536.67v-2.66V-146.67v-666.66 190.66-190.66Zm92.66 400h161q11.67-19 26.17-35.67 14.5-16.67 31.83-31h-219v66.67Zm0 166.66h123q-2.33-16.66-2-33.33.34-16.67 2.67-33.33H279.33v66.66ZM186.67-80q-27 0-46.84-19.83Q120-119.67 120-146.67v-666.66q0-27 19.83-46.84Q159.67-880 186.67-880H534l226 226v134q-15.67-6.67-32.33-10.67-16.67-4-34.34-6v-86H500.67v-190.66h-314v666.66h249q11 19 24.5 35.67t29.5 31h-303Zm476.66-392.67q81.34 0 138.67 57.33 57.33 57.33 57.33 138.67 0 81.34-57.33 138.67-57.33 57.33-138.67 57.33-81.34 0-138.67-57.33-57.33-57.33-57.33-138.67 0-81.34 57.33-138.67 57.33-57.33 138.67-57.33Zm.74 318.67q11.6 0 19.43-7.91 7.83-7.9 7.83-19.5 0-11.59-7.9-19.42-7.91-7.84-19.5-7.84-11.6 0-19.43 7.91-7.83 7.9-7.83 19.5 0 11.59 7.9 19.43 7.91 7.83 19.5 7.83Zm-19.4-80h38.66v-10.63q0-11.7 6.34-21.2 6.33-9.5 14.81-17.77 14.85-12.4 23.85-24.4 9-12 9-32 0-30.81-20.53-49.41Q696.27-408 663.85-408q-24.85 0-45.02 14.17-20.16 14.16-28.16 38.82L625.33-340q2.34-13.33 13.17-22.67 10.83-9.33 25.8-9.33 16.03 0 25.2 8 9.17 8 9.17 24 0 11-6.67 19.17-6.67 8.16-14.67 16.16-7.33 6.67-14.5 13.34-7.16 6.66-12.16 14.66-3.67 6.67-4.84 12.87-1.16 6.2-1.16 14.47V-234Z"/></svg>
+      <p>no question found,</p>
+      <p>you can</p>
+      <%= link_to edit_questionnaire_questions_path(@questionnaire), class: "button" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M200-440h240v-160H200v160Zm0-240h560v-80H200v80Zm0 560q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v252q-19-8-39.5-10.5t-40.5.5q-21 4-40.5 13.5T684-479l-39 39-205 204v116H200Zm0-80h240v-160H200v160Zm320-240h125l39-39q16-16 35.5-25.5T760-518v-82H520v160Zm0 360v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-300L643-80H520Zm300-263-37-37 37 37ZM580-140h38l121-122-37-37-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
+        initiate structure
+      <% end %>
+      <p>or</p>
+      <%= link_to "#", class: "button" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+        upload csv
+      <% end %>
+    </div>
+  <% end %>
 </div>
