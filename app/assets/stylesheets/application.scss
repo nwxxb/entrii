@@ -102,7 +102,7 @@ h4, h5, h6 {
     align-items: center;
     border: var(--border-size-2) dashed var(--surface-3);
     border-radius: var(--radius-drawn-6);
-    filter: opacity(50%);
+    filter: opacity(70%);
     color: var(--text-1);
 
     box-shadow: none;
@@ -213,6 +213,17 @@ h4, h5, h6 {
 
   &--active {
     background-color: var(--surface-2);
+  }
+
+  &--disabled {
+    background-color: var(--surface-1);
+    filter: opacity(50%);
+
+    &:hover {
+      box-shadow: none;
+      background-color: var(--surface-1);
+      cursor: not-allowed;
+    }
   }
 }
 
