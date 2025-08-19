@@ -114,11 +114,12 @@ $(document).on('click', '[data-behaviour="show-questions-preview"]', function(e)
 			$clonedQuestionPreviewTemplate.appendTo($questionsPreviewWrapper);
 		})
 
-		$questionsPreviewWrapper.closest('.modal').fadeIn(200);
+		if ($questionsPreviewWrapper.children().length > 0) {
+			$questionsPreviewWrapper.closest('.modal').fadeIn(200);
+		}
 	}
 })
 
 $(document).on('click', '.modal', function(e) {
-	console.log('clicked');
 	$(this).fadeOut(200);
 })
