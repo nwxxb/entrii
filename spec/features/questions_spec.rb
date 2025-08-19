@@ -38,7 +38,7 @@ RSpec.feature "Questions", :js do
       existing_questions.each.with_index do |existing_question, index|
         question_form = find("input[name*='[id]'][value='#{existing_question.id}']", visible: :hidden).ancestor("div.question-form")
         question_form.find("input[name^='questionnaire[questions_attributes]'][name$='[name]']").fill_in with: existing_question.name + "_updated"
-        question_form.find("textarea[name^='questionnaire[questions_attributes]'][name$='[description]']").fill_in with: existing_question.description
+        question_form.find("input[name^='questionnaire[questions_attributes]'][name$='[description]']").fill_in with: existing_question.description
         question_form.find("select[name^='questionnaire[questions_attributes]'][name$='[value_type]']").select existing_question.value_type
         question_form.find("label[for^='questionnaire_questions_attributes'][for$='_is_emptyable']").click
       end
@@ -47,7 +47,7 @@ RSpec.feature "Questions", :js do
         find("button, a", text: "add question").click
 
         all("input[name^='questionnaire[questions_attributes]'][name$='[name]']").last.fill_in with: new_question.name
-        all("textarea[name^='questionnaire[questions_attributes]'][name$='[description]']").last.fill_in with: new_question.description
+        all("input[name^='questionnaire[questions_attributes]'][name$='[description]']").last.fill_in with: new_question.description
         all("select[name^='questionnaire[questions_attributes]'][name$='[value_type]']").last.select new_question.value_type
         all("label[for^='questionnaire_questions_attributes'][for$='is_emptyable']").last.click
       end
@@ -63,7 +63,7 @@ RSpec.feature "Questions", :js do
         find("button, a", text: "add question").click
 
         all("input[name^='questionnaire[questions_attributes]'][name$='[name]']").last.fill_in with: deferred_question.name
-        all("textarea[name^='questionnaire[questions_attributes]'][name$='[description]']").last.fill_in with: deferred_question.description
+        all("input[name^='questionnaire[questions_attributes]'][name$='[description]']").last.fill_in with: deferred_question.description
         all("select[name^='questionnaire[questions_attributes]'][name$='[value_type]']").last.select deferred_question.value_type
         all("label[for^='questionnaire_questions_attributes'][for$='is_emptyable']").last.click
 

@@ -33,17 +33,14 @@
           <%= existing_question_f.hidden_field :position %>
           <%= existing_question_f.hidden_field :_destroy, value: "0" %>
 
-          <fieldset class="field field--stacked">
+          <fieldset class="field field--inline">
             <%= existing_question_f.label :name %>
             <%= existing_question_f.text_field :name %>
           </fieldset>
 
-          <fieldset class="field field--stacked">
+          <fieldset class="field field--inline">
             <%= existing_question_f.label :description %>
-            <%=
-              existing_question_f.text_area :description,
-                style: "resize: vertical; min-height: 50px", rows: 1
-            %>
+            <%= existing_question_f.text_field :description %>
           </fieldset>
 
           <fieldset class="field">
@@ -79,25 +76,20 @@
           <%= question_f.hidden_field :position %>
           <%= question_f.hidden_field :_destroy, value: "0" %>
 
-          <fieldset class="field field--stacked">
+          <fieldset class="field field--inline">
             <%= question_f.label :name %>
             <%= question_f.text_field :name %>
           </fieldset>
 
-          <fieldset class="field field--stacked">
+          <fieldset class="field field--inline">
             <%= question_f.label :description %>
-            <%=
-              question_f.text_area :description,
-                style: "resize: vertical; min-height: 50px", rows: 1
-            %>
+            <%= question_f.text_field :description %>
           </fieldset>
 
           <fieldset class="field">
             <%= question_f.label :value_type %>
             <%= question_f.select :value_type, Question.value_types %>
-          </fieldset>
-
-          <fieldset class="field">
+            <span style="color: var(--surface-3);">|</span>
             <%= question_f.check_box :is_emptyable %>
             <%= question_f.label :is_emptyable, class: "checkable" %>
           </fieldset>
@@ -122,7 +114,7 @@
 
     <template data-target="question-preview-template">
       <fieldset class="field field--stacked" disabled>
-        <p style="display: flex; gap: 2px;"></p>
+        <p style="display: flex; align-items: center; gap: 2px;"></p>
         <input type="text">
       </fieldset>
     </template>
