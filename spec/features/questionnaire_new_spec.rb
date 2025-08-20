@@ -50,5 +50,34 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
         expect(page).to have_selector(:button, "log new data", disabled: true)
       end
     end
+
+    context "when editing structure/questions" do
+      before do
+        sign_in(owner)
+        visit edit_questionnaire_questions_path(questionnaire)
+      end
+
+      it "show upload csv button (and disappear when new fieldset exist)" do
+        expect(page).to have_selector("[data-target='empty-state-ghost-section']")
+        find(:button, "add question").click
+        expect(page).not_to have_selector("[data-target='empty-state-ghost-section']")
+      end
+
+      it "disabled preview button" do
+        expect(page).to have_button("preview", disabled: true)
+      end
+    end
+
+    context "when logging new data" do
+      before do
+        sign_in(owner)
+        visit new_questionnaire_submission_path(questionnaire)
+      end
+
+      it "forbid user and alert that questions don't exist" do
+        expect(page).to have_content("current questionnaire doesn't have any questions yet")
+        expect(page).to have_current_path(questionnaire_path(questionnaire))
+      end
+    end
   end
 end

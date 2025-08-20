@@ -38,6 +38,8 @@ $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 
 	$clonedQuestionForm = $questionForm.clone().appendTo($questionsWrapper);
 	updateCardQuestionPositionValue();
+	toggleEmptyStateGhostSection()
+	togglePreviewButtonEnability()
 
 	$clonedQuestionForm.find('input:visible').first().trigger("focus");
 });
@@ -51,6 +53,8 @@ $(document).on('click', '[data-behaviour="remove-question-form"]', function(e) {
 	$card.children('fieldset').remove()
 	$card.hide()
 	updateCardQuestionPositionValue();
+	toggleEmptyStateGhostSection()
+	togglePreviewButtonEnability()
 })
 
 $(document).on('click', '[data-behaviour="change-question-position-up"]', function(e) {
@@ -71,6 +75,8 @@ $(document).on('click', '[data-behaviour="change-question-position-down"]', func
 
 $(document).on('turbo:load', function(e) {
 	updateCardQuestionPositionValue();
+	toggleEmptyStateGhostSection()
+	togglePreviewButtonEnability()
 })
 
 function updateCardQuestionPositionValue() {
@@ -81,6 +87,28 @@ function updateCardQuestionPositionValue() {
 
 			$card.find('input[name^="questionnaire[questions_attributes]"][name$="[position]"]').val(String(idx))
 		})
+	}
+}
+
+function toggleEmptyStateGhostSection() {
+	$ghostMessage = $('[data-target="empty-state-ghost-section"]')
+	$questionsWrapper = $('[data-target="questions-wrapper"]')
+	if($questionsWrapper.length > 0 && $questionsWrapper.children('.question-form:visible').length > 0) {
+		$ghostMessage.hide()
+	} else {
+		$ghostMessage.show()
+	}
+}
+
+function togglePreviewButtonEnability() {
+	$previewButton = $('[data-behaviour="show-questions-preview"]');
+	$questionsWrapper = $('[data-target="questions-wrapper"]');
+	if($questionsWrapper.length > 0 && $questionsWrapper.children('.question-form:visible').length > 0) {
+		$previewButton.prop('disabled', false);
+		$previewButton.toggleClass('button--disabled', false);
+	} else {
+		$previewButton.prop('disabled', true);
+		$previewButton.toggleClass('button--disabled', true);
 	}
 }
 

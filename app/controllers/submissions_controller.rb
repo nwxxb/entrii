@@ -1,6 +1,13 @@
 class SubmissionsController < ApplicationController
   def new
     @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
+
+    @questions = @questionnaire.questions.kept
+
+    if @questions.blank?
+      redirect_to(questionnaire_path(@questionnaire), alert: "current questionnaire doesn't have any questions yet") and return
+    end
+
     @submission = @questionnaire.submissions.new
     @questionnaire.questions.kept.each do |question|
       @submission.submission_values.new(question: question)
