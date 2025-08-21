@@ -47,3 +47,26 @@
     </div>
   <% end %>
 </div>
+
+<div class="modal">
+  <div class="modal__content">
+    <div class="card" data-target="questionnaire-csv-upload-form-wrapper">
+      <button class="modal__content__close_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z"/></svg>
+      </button>
+      <%= form_with(url: questionnaire_csv_create_path(@questionnaire), method: :post) do |f| %>
+        <%= f.label :csv_file, id: "questionnaire_csv_file", class: "field__dropfile" do %>
+          <div class="card card--ghost-stacked">
+            <%= f.file_field :csv_file, accept: ".csv" %> 
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="currentColor"><path d="M452-202h60v-201l82 82 42-42-156-152-154 154 42 42 84-84v201ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h361l219 219v521q0 24-18 42t-42 18H220Zm331-554v-186H220v680h520v-494H551ZM220-820v186-186 680-680Z"/></svg>
+            <p class="field__dropfile__text">upload a csv file...</p>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "generate questions", class: "button button--full" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -23,6 +23,20 @@ class QuestionnairesController < ApplicationController
     @questionnaire = current_user.questionnaires.find(params[:id])
   end
 
+  def create_from_csv
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
+
+    begin
+      CsvParserJob.new.perform(@questionnaire.id, params[:csv_file].tempfile.read)
+    rescue CSV::MalformedCSVError => e
+      redirect_to(questionnaire_path(@questionnaire), alert: "Can't parse document: #{e.message}") and return
+    rescue ActiveRecord::ActiveRecordError => e
+      redirect_to(questionnaire_path(@questionnaire), alert: "#{e.message}") and return
+    end
+
+    redirect_to(questionnaire_path(@questionnaire)) and return
+  end
+
   private
 
   def questionnaire_params

@@ -12,6 +12,18 @@ $(document).on('change', '.field__dropimage', function(e) {
 	reader.readAsDataURL(e.target.files[0]);
 });
 
+$(document).on('change', '.field__dropfile', function(e) {
+	var inputfile = this;
+	var reader = new FileReader();
+	var file = e.target.files[0];
+
+	reader.onloadend = function() {
+		$(inputfile).find('.field__dropfile__text').text(file.name);
+	}
+
+	reader.readAsDataURL(file);
+});
+
 $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 	e.preventDefault();
 
@@ -148,6 +160,17 @@ $(document).on('click', '[data-behaviour="show-questions-preview"]', function(e)
 	}
 })
 
+$(document).on('click', '[data-behaviour="show-csv-upload-modal"]', function(e) {
+	var $csvUploadModal = $('[data-target="questionnaire-csv-upload-form-wrapper"]')
+	$csvUploadModal.closest('.modal').fadeIn(200);
+})
+
 $(document).on('click', '.modal', function(e) {
-	$(this).fadeOut(200);
+	if (e.target == this) {
+		$(this).fadeOut(200);
+	}
+})
+
+$(document).on('click', '.modal__content__close_btn', function(e) {
+	$(this).closest('.modal').fadeOut(200);
 })
