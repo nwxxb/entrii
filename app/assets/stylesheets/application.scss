@@ -107,6 +107,17 @@ h4, h5, h6 {
 
     box-shadow: none;
   }
+
+  &--ghost-stacked {
+    flex-flow: column;
+    align-items: center;
+    border: var(--border-size-2) dashed var(--surface-3);
+    border-radius: var(--radius-drawn-6);
+    filter: opacity(70%);
+    color: var(--text-1);
+
+    box-shadow: none;
+  }
 }
 
 .field {
