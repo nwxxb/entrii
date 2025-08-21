@@ -5,6 +5,11 @@
   font-size: var(--font-size-fluid-0);
 }
 
+svg {
+  min-width: var(--size-px-1);
+  flex-shrink: 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: var(--size-px-2);
 }
@@ -53,7 +58,7 @@ h4, h5, h6 {
 
 .alert {
   display: flex;
-  gap: var(--size-px-2);
+  gap: var(--size-px-3);
   padding-block: var(--size-3);
   padding-left: var(--size-px-3);
   margin-block: 4px;
@@ -67,6 +72,10 @@ h4, h5, h6 {
   &--info {
     border-left: var(--blue-6) var(--border-size-3) solid;
   }
+}
+
+.alert__text {
+  max-inline-size: 90ch;
 }
 
 .cards-container {
