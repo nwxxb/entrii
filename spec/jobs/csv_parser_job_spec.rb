@@ -44,8 +44,10 @@ RSpec.describe CsvParserJob, type: :job do
 
     CsvParserJob.new.perform(questionnaire.id, file_content)
 
-    expect(questionnaire.questions.length).to eq(4)
+    expect(questionnaire.questions.kept.length).to eq(4)
     expect(questionnaire.submissions.length).to eq(4)
     expect(questionnaire.submission_values.length).to eq(10)
+
+    expect(questionnaire.questions.map(&:value_type)).to eq(["number", "text", "number", "text"])
   end
 end

@@ -10,6 +10,7 @@ class CsvParserJob < ApplicationJob
 
     Questionnaire.transaction do
       questions = {}
+      counter = 0
       CSV.parse(file_content.split("\n", 2).first) do |head|
         head.each_with_index do |h, i|
           questions[h] = Question.create!(name: h, position: i, questionnaire: questionnaire, is_emptyable: true)
@@ -21,10 +22,18 @@ class CsvParserJob < ApplicationJob
           submission = Submission.create!(questionnaire: questionnaire)
 
           questions.each do |h, question|
+            if counter == 0
+              if /\A[\d\.]+\z/.match?(row[h])
+                question.number!
+              end
+            end
+
             if row[h].present?
               submission.submission_values.create!(value: row[h], question: question, questionnaire: questionnaire)
             end
           end
+
+          counter += 1
         end
       end
     end
