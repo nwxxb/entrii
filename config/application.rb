@@ -40,5 +40,8 @@ module Entrii
     # we use composite foreign key and rails default format
     # seems to have problem with it
     config.active_record.schema_format = :sql
+
+    # use sidekiq as active_job's backend
+    config.active_job.queue_adapter = :sidekiq
   end
 end

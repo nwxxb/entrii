@@ -12,6 +12,18 @@ $(document).on('change', '.field__dropimage', function(e) {
 	reader.readAsDataURL(e.target.files[0]);
 });
 
+$(document).on('change', '.field__dropfile', function(e) {
+	var inputfile = this;
+	var reader = new FileReader();
+	var file = e.target.files[0];
+
+	reader.onloadend = function() {
+		$(inputfile).find('.field__dropfile__text').text(file.name);
+	}
+
+	reader.readAsDataURL(file);
+});
+
 $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 	e.preventDefault();
 
@@ -38,6 +50,8 @@ $(document).on('click', '[data-behaviour="add-question-form"]', function(e) {
 
 	$clonedQuestionForm = $questionForm.clone().appendTo($questionsWrapper);
 	updateCardQuestionPositionValue();
+	toggleEmptyStateGhostSection()
+	togglePreviewButtonEnability()
 
 	$clonedQuestionForm.find('input:visible').first().trigger("focus");
 });
@@ -51,6 +65,8 @@ $(document).on('click', '[data-behaviour="remove-question-form"]', function(e) {
 	$card.children('fieldset').remove()
 	$card.hide()
 	updateCardQuestionPositionValue();
+	toggleEmptyStateGhostSection()
+	togglePreviewButtonEnability()
 })
 
 $(document).on('click', '[data-behaviour="change-question-position-up"]', function(e) {
@@ -71,6 +87,8 @@ $(document).on('click', '[data-behaviour="change-question-position-down"]', func
 
 $(document).on('turbo:load', function(e) {
 	updateCardQuestionPositionValue();
+	toggleEmptyStateGhostSection()
+	togglePreviewButtonEnability()
 })
 
 function updateCardQuestionPositionValue() {
@@ -81,6 +99,28 @@ function updateCardQuestionPositionValue() {
 
 			$card.find('input[name^="questionnaire[questions_attributes]"][name$="[position]"]').val(String(idx))
 		})
+	}
+}
+
+function toggleEmptyStateGhostSection() {
+	$ghostMessage = $('[data-target="empty-state-ghost-section"]')
+	$questionsWrapper = $('[data-target="questions-wrapper"]')
+	if($questionsWrapper.length > 0 && $questionsWrapper.children('.question-form:visible').length > 0) {
+		$ghostMessage.hide()
+	} else {
+		$ghostMessage.show()
+	}
+}
+
+function togglePreviewButtonEnability() {
+	$previewButton = $('[data-behaviour="show-questions-preview"]');
+	$questionsWrapper = $('[data-target="questions-wrapper"]');
+	if($questionsWrapper.length > 0 && $questionsWrapper.children('.question-form:visible').length > 0) {
+		$previewButton.prop('disabled', false);
+		$previewButton.toggleClass('button--disabled', false);
+	} else {
+		$previewButton.prop('disabled', true);
+		$previewButton.toggleClass('button--disabled', true);
 	}
 }
 
@@ -114,11 +154,23 @@ $(document).on('click', '[data-behaviour="show-questions-preview"]', function(e)
 			$clonedQuestionPreviewTemplate.appendTo($questionsPreviewWrapper);
 		})
 
-		$questionsPreviewWrapper.closest('.modal').fadeIn(200);
+		if ($questionsPreviewWrapper.children().length > 0) {
+			$questionsPreviewWrapper.closest('.modal').fadeIn(200);
+		}
 	}
 })
 
+$(document).on('click', '[data-behaviour="show-csv-upload-modal"]', function(e) {
+	var $csvUploadModal = $('[data-target="questionnaire-csv-upload-form-wrapper"]')
+	$csvUploadModal.closest('.modal').fadeIn(200);
+})
+
 $(document).on('click', '.modal', function(e) {
-	console.log('clicked');
-	$(this).fadeOut(200);
+	if (e.target == this) {
+		$(this).fadeOut(200);
+	}
+})
+
+$(document).on('click', '.modal__content__close_btn', function(e) {
+	$(this).closest('.modal').fadeOut(200);
 })

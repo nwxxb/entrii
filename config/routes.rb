@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get "users/show", to: "users/registrations#show", as: "user_profile"
   end
   resources :questionnaires do
+    post "csv/create", to: "questionnaires#create_from_csv"
     resource :questions, only: [:show, :edit, :update] do
       delete ":id", to: "questions#destroy"
     end
