@@ -118,6 +118,8 @@ GEM
       railties (>= 3.2, < 9.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.26.1-x86_64-linux)
+      rake (>= 13)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     image_processing (1.14.0)
@@ -171,7 +173,10 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
+    pg_query (6.0.0)
+      google-protobuf (>= 3.25.3)
     prism (1.4.0)
+    prosopite (2.1.1)
     public_suffix (5.1.1)
     puma (5.6.9)
       nio4r (~> 2.0)
@@ -366,6 +371,8 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.3)
   pg (~> 1.1)
+  pg_query
+  prosopite
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.0)

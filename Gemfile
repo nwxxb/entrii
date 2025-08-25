@@ -48,6 +48,9 @@ group :development, :test do
   gem "standard-rails", require: false
   gem "rubocop-rspec", require: false
   gem "factory_bot_rails"
+  gem "prosopite"
+  # prosopite deps
+  gem "pg_query"
 end
 
 group :development do
