@@ -69,6 +69,16 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.before do |test|
+    log_label = "running test case: #{test.description}..."
+    file_path_label = "located in: #{test.file_path}"
+    text_length = log_label.length
+    Rails.logger.debug(Rainbow("=" * text_length).yellow.underline.bright)
+    Rails.logger.debug(Rainbow(log_label).yellow.underline.bright)
+    Rails.logger.debug(Rainbow(file_path_label).yellow.underline.bright)
+    Rails.logger.debug(Rainbow("=" * text_length).yellow.underline.bright)
+  end
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 

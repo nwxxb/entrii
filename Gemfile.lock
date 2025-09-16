@@ -67,6 +67,7 @@ GEM
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.20)
+    benchmark-ips (2.14.0)
     bindex (0.8.1)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
@@ -88,6 +89,10 @@ GEM
     cuprite (0.17)
       capybara (~> 3.0)
       ferrum (~> 0.17.0)
+    database_cleaner-active_record (2.2.2)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0)
+    database_cleaner-core (2.0.1)
     date (3.4.1)
     devise (4.9.4)
       bcrypt (~> 3.0)
@@ -355,12 +360,14 @@ PLATFORMS
 
 DEPENDENCIES
   activestorage-validator
+  benchmark-ips
   bootsnap (>= 1.4.4)
   byebug
   capybara
   concurrent-ruby (= 1.3.4)
   csv (~> 3.3)
   cuprite
+  database_cleaner-active_record
   devise
   discard (~> 1.4)
   factory_bot_rails
@@ -376,6 +383,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.0)
+  rainbow
   responders (~> 3.1)
   rspec-rails (~> 6.1.0)
   rubocop-rspec
