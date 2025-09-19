@@ -123,6 +123,9 @@ GEM
       railties (>= 3.2, < 9.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    goldiloader (4.2.1)
+      activerecord (>= 5.2, < 7.2)
+      activesupport (>= 5.2, < 7.2)
     google-protobuf (4.26.1-x86_64-linux)
       rake (>= 13)
     i18n (1.14.7)
@@ -373,6 +376,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   font-awesome-rails
+  goldiloader
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   jquery-rails
