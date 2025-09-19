@@ -1,5 +1,5 @@
-@import url("https://unpkg.com/open-props");
-@import url("https://unpkg.com/open-props/normalize.min.css");
+@import '~open-props/open-props.min.css';
+@import '~open-props/normalize.min.css';
 
 :root {
   font-size: var(--font-size-fluid-0);
@@ -156,7 +156,7 @@ h4, h5, h6 {
   inline-size: 100px;
   aspect-ratio: var(--ratio-square);
   border-radius: var(--radius-round);
-  background-image: image-url('profile_placeholder.png');
+  background-image: url('../images/profile_placeholder.png');
   background-size: 100px;
 
   input[type="file"] {
@@ -168,7 +168,7 @@ h4, h5, h6 {
   inline-size: 100px;
   aspect-ratio: var(--ratio-square);
   border-radius: var(--radius-round);
-  background-image: image-url('profile_placeholder.png');
+  background-image: url('../images/profile_placeholder.png');
   background-size: 100px;
 
   input[type="file"] {
