@@ -48,6 +48,12 @@ group :development, :test do
   gem "standard-rails", require: false
   gem "rubocop-rspec", require: false
   gem "factory_bot_rails"
+  gem "prosopite"
+  # prosopite deps
+  gem "pg_query"
+  gem "rainbow"
+  gem "benchmark-ips"
+  gem "database_cleaner-active_record"
 end
 
 group :development do
@@ -56,7 +62,7 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem "listen", "~> 3.3"
-  gem "rack-mini-profiler", "~> 2.0"
+  gem "rack-mini-profiler", "~> 2.0", require: false
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
 end
@@ -66,6 +72,21 @@ group :test do
   gem "cuprite"
   gem "simplecov", require: false
 end
+
+# rubocop:disable Bundler/DuplicatedGem
+group :local_prod do
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "rack-mini-profiler", "~> 2.0", require: false
+  gem "benchmark-ips"
+  gem "database_cleaner-active_record"
+  gem "prosopite"
+  # prosopite deps
+  gem "pg_query"
+  gem "rainbow"
+  gem "factory_bot_rails"
+  gem "faker"
+end
+# rubocop:enable Bundler/DuplicatedGem
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]

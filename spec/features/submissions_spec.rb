@@ -7,9 +7,9 @@ RSpec.feature "Questions", :js do
 
     questions = [
       create(:question, :text, questionnaire: questionnaire, position: 0),
-      create(:question, :number, questionnaire: questionnaire, position: 12),
-      create(:question, :text, questionnaire: questionnaire, position: 12),
-      create(:question, :number, questionnaire: questionnaire, position: 12),
+      create(:question, :number, name: "a-question", questionnaire: questionnaire, position: 12),
+      create(:question, :text, name: "b-question", questionnaire: questionnaire, position: 12),
+      create(:question, :number, name: "c-question", questionnaire: questionnaire, position: 12),
       create(:question, :text, questionnaire: questionnaire, position: 999)
     ]
 
