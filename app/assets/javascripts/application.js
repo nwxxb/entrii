@@ -73,7 +73,7 @@ $(document).on('click', '[data-behaviour="change-question-position-up"]', functi
 	e.preventDefault();
 
 	var $card = $(this).closest('.card.question-form')
-	$card.prev().insertAfter($card)
+	$card.prevAll('.card.question-form:visible').first().insertAfter($card)
 	updateCardQuestionPositionValue();
 })
 
@@ -81,7 +81,7 @@ $(document).on('click', '[data-behaviour="change-question-position-down"]', func
 	e.preventDefault();
 
 	var $card = $(this).closest('.card.question-form')
-	$card.next().insertBefore($card)
+	$card.nextAll('.card.question-form:visible').first().insertBefore($card)
 	updateCardQuestionPositionValue();
 })
 
