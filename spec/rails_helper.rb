@@ -13,6 +13,7 @@ require "rspec/rails"
 require "capybara/rspec"
 require "capybara/rails"
 require "capybara/cuprite"
+require "site_prism"
 
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(
