@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
-  def show
-    @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
-  end
+  # def show
+  # end
 
   def edit
     @questionnaire = current_user.questionnaires.find(params[:questionnaire_id])
@@ -16,8 +15,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def destroy
-  end
+  # def destroy
+  # end
 
   private
 
