@@ -1,11 +1,11 @@
-<div class="card card--no-line">
+<div id="#questionnaire-hero" class="card card--no-line">
   <h1><%= @questionnaire.title %></h1>
   <p><%= @questionnaire.description %></p>
 </div>
 
 <%= render 'questionnaires/subnavbar' %>
 
-<div class="card">
+<div id="questionnaire-main-view" class="card">
   <%= form_with(model: @submission, url: questionnaire_submissions_path(@questionnaire), method: :post) do |f| %>
       <%= f.fields_for :submission_values do |submission_values_f| %>
         <fieldset class="field field--stacked">

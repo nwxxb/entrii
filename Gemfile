@@ -74,6 +74,7 @@ group :test do
   gem "capybara"
   gem "cuprite"
   gem "simplecov", require: false
+  gem "site_prism"
 end
 
 # rubocop:disable Bundler/DuplicatedGem

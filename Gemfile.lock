@@ -304,6 +304,11 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
+    site_prism (5.1)
+      addressable (~> 2.8, >= 2.8.4)
+      capybara (~> 3.34)
+      site_prism-all_there (> 3, < 5)
+    site_prism-all_there (3.0.7)
     spring (4.3.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
@@ -394,6 +399,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   sidekiq
   simplecov
+  site_prism
   spring
   standard (~> 1.37.0)
   standard-rails
