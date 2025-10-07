@@ -47,7 +47,8 @@ RSpec.describe Question, type: :model do
 
     valid_questions = [
       build(:question, value_type: "text"),
-      build(:question, value_type: "number")
+      build(:question, value_type: "number"),
+      build(:question, value_type: "date")
     ]
 
     invalid_questions.each(&:valid?)
