@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SubmissionValue, type: :model do
+  include ActiveSupport::Testing::TimeHelpers
   describe "(DB constraint)" do
     it "errors if more than one submission_values with same question on a submission" do
       questionnaire = create(:questionnaire)
@@ -32,5 +33,22 @@ RSpec.describe SubmissionValue, type: :model do
       expect { create_value_on_another_questionnaire_question.call }.to raise_error ActiveRecord::ActiveRecordError
       expect { create_value_on_same_questionnaire_question.call }.not_to raise_error
     end
+  end
+
+  it "updating submission_value will also touch submission updated_at column" do
+    questionnaire = create(:questionnaire)
+    submission = create(:submission, questionnaire: questionnaire)
+    submission_value = create(:submission_value, value: "text", submission: submission, questionnaire: questionnaire)
+    another_submission_value = create(:submission_value, submission: submission, questionnaire: questionnaire)
+    time = nil
+
+    freeze_time do
+      time = Time.current
+      submission_value.update!(value: "updated_text")
+    end
+
+    expect(submission.updated_at).to eq time
+    expect(submission_value.updated_at).to eq time
+    expect(another_submission_value.updated_at).not_to eq time
   end
 end

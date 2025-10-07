@@ -9,7 +9,8 @@
   <%= form_with(model: @submission, url: questionnaire_submissions_path(@questionnaire), method: :post) do |f| %>
       <%= f.fields_for :submission_values do |submission_values_f| %>
         <fieldset class="field field--stacked">
-          <% question = submission_values_f.object.question %>
+          <% submission_value = submission_values_f.object %>
+          <% question = submission_value.question %>
           <%= submission_values_f.hidden_field :question_id, value: question.id %>
           <%= submission_values_f.label :value do %>
             <%= question.name %>
@@ -17,11 +18,15 @@
             <% unless question.is_emptyable? %>
               <span class="mini-label">required</span>
             <% end %>
-            <% if submission_values_f.object.errors.any? %>
-              <em>(<%= submission_values_f.object.errors[:value].join("; ") %>)</em>
+            <% if submission_value.errors.any? %>
+              <em>(<%= submission_value.errors[:value].join("; ") %>)</em>
             <% end %>
           <% end %>
-          <%= submission_values_f.text_field :value, required: !question.is_emptyable?, pattern: question.valid_pattern %>
+          <% if question.date? %>
+            <%= submission_values_f.date_field :value, required: !question.is_emptyable? %>
+          <% else %>
+            <%= submission_values_f.text_field :value, required: !question.is_emptyable?, pattern: question.valid_pattern %>
+          <% end %>
         </fieldset>
     <% end %>
 

@@ -10,7 +10,7 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
   end
 
   scenario "user can create, update, and move, and remove questions and it will appears on table as column" do
-    create(:question, :number, name: "existing question", questionnaire: questionnaire, position: 1)
+    create(:question, :date, name: "existing question", questionnaire: questionnaire, position: 1)
     create(:question, :number, name: "unnecessary question", questionnaire: questionnaire, position: 99)
     edit_questions_page = questionnaire_prism.edit_questions
     edit_questions_page.load(id: questionnaire.id)
@@ -34,13 +34,13 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
     main_page = questionnaire_prism.main
     expect(main_page).to be_displayed
     expect(main_page.main_view).to have_table
-    expect(main_page.main_view.table.columns_text).to eq(["question1", "question2", "existing question3"])
+    expect(main_page.main_view.table.columns_text).to eq(["question1", "question2", "existing question3", "created at", "updated at"])
     expect(main_page.main_view.table).to have_no_rows
     main_page.subnavbar.click_link_or_button("log new data")
     add_submission = questionnaire_prism.add_submission
     expect(add_submission).to be_displayed
     expect(add_submission.main_view).to have_question_fields(count: 3)
-    expect(add_submission.question_labels_text).to eq(["question1 text required", "question2 text required", "existing question3 number required"])
+    expect(add_submission.question_labels_text).to eq(["question1 text required", "question2 text required", "existing question3 date required"])
   end
 
   scenario "user can create new submission and it appears on table as row" do
@@ -51,14 +51,14 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
       create(:question, :text, name: "background", questionnaire: questionnaire, position: 1, created_at: random_date),
       create(:question, :number, name: "count", questionnaire: questionnaire, position: 1, created_at: random_date),
       create(:question, :text, name: "description", questionnaire: questionnaire, position: 1, created_at: random_date),
-      create(:question, :number, name: "last question", questionnaire: questionnaire, position: 999, created_at: random_date)
+      create(:question, :date, name: "interested at", questionnaire: questionnaire, position: 999, created_at: random_date)
     ]
     create(:question, :text, name: "non-existing-question", position: 1)
 
     add_submission_page = questionnaire_prism.add_submission
     add_submission_page.load(id: questionnaire.id)
     question_fields = add_submission_page.main_view.question_fields
-    submission_values = ["text1", "1", "text2", "2", "text3", "3"]
+    submission_values = ["text1", "1", "text2", "2", "text3", "2012-12-01"]
     submission_values.each_with_index do |submission_value, i|
       question_fields[i].question_field.fill_in with: submission_value
     end
@@ -66,18 +66,19 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
     main_page = questionnaire_prism.main
     expect(main_page).to be_displayed
     expect(main_page.main_view).to have_table
-    expect(main_page.main_view.table.columns_text).to eq(questions.map(&:name))
+    expect(main_page.main_view.table.columns_text).to eq(questions.map(&:name) + ["created at", "updated at"])
     expect(main_page.main_view.table.rows_text.first).to start_with(submission_values)
   end
 
   scenario "user can update submission" do
     create(:question, :text, name: "first question", questionnaire: questionnaire, position: 0)
+    create(:question, :date, name: "action date", questionnaire: questionnaire, position: 1)
     create(:question, :number, name: "amount", questionnaire: questionnaire, position: 1)
 
     add_submission_page = questionnaire_prism.add_submission
     add_submission_page.load(id: questionnaire.id)
     question_fields = add_submission_page.main_view.question_fields
-    submission_values = ["text1", "1"]
+    submission_values = ["text1", "2024-11-01", "1"]
     submission_values.each_with_index do |submission_value, i|
       question_fields[i].question_field.fill_in with: submission_value
     end
@@ -87,7 +88,7 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
     question_fields = add_submission_page.main_view.question_fields.first.question_field.fill_in with: "updated text"
     add_submission_page.main_view.submit_btn.click
 
-    expect(main_page.main_view.table.rows_text.first).to start_with(["updated text", "1"])
+    expect(main_page.main_view.table.rows_text.first).to start_with(["updated text", "2024-11-01", "1"])
   end
 
   scenario "user can remove submission" do

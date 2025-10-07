@@ -13,6 +13,8 @@
         <% @questionnaire.questions.kept.each do |question| %>
           <th><%= question.name %></th>
         <% end %>
+        <th>created at</th>
+        <th>updated at</th>
       </tr>
       </thead>
       <tbody>
@@ -21,6 +23,8 @@
           <% submission.whole_submission_values.each do |submission_value| %>
             <td><%= submission_value.value %></td>
           <% end %>
+          <td><%= submission.created_at.to_formatted_s(:short) %></td>
+          <td><%= submission.updated_at.to_formatted_s(:short) %></td>
           <td style="display: flex; gap: 2px;">
             <%= link_to "edit", edit_questionnaire_submission_path(@questionnaire, submission), class: "button" %>
             <%= link_to "remove", questionnaire_submission_path(@questionnaire, submission), class: "button", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>

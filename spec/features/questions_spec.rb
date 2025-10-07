@@ -131,7 +131,9 @@ RSpec.feature "Questions", :js do
       existing_questions2.name,
       existing_questions1.name,
       new_question1.name,
-      existing_questions3.name
+      existing_questions3.name,
+      "created at",
+      "updated at"
     ])
     expect(page).to have_table(rows: [])
   end

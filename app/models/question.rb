@@ -24,14 +24,14 @@ class Question < ApplicationRecord
   validates :description, length: {in: 0..280}
 
   validates :value_type, presence: true
-  enum value_type: {text: "text", number: "number"}, _default: "text"
+  enum value_type: {text: "text", number: "number", date: "date"}, _default: "text"
 
   # unfortunately, we can't use ruby's regex (even with to_s)
   def valid_pattern
     if number?
-      '\d*'
+      '[\d.]*'
     else
-      '[\w\ \-&\(\)]*'
+      '[a-zA-Z0-9_\. \'\-\(\)]*'
     end
   end
 end
