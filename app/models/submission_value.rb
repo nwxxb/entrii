@@ -1,6 +1,6 @@
 class SubmissionValue < ApplicationRecord
   belongs_to :questionnaire
-  belongs_to :submission
+  belongs_to :submission, touch: true
   belongs_to :question
 
   validates :value, presence: {unless: :is_emptyable?}
