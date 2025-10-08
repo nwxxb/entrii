@@ -8,6 +8,11 @@ class SubmissionsController < ApplicationController
       redirect_to(questionnaire_path(@questionnaire), alert: "current questionnaire doesn't have any questions yet") and return
     end
 
+    @old_submission = nil
+    if prefill_with_prev_submission_params
+      @old_submission = @questionnaire.submissions.last
+    end
+
     @submission = @questionnaire.submissions.new
     @questionnaire.questions.kept.each do |question|
       @submission.submission_values.new(question: question)
@@ -50,6 +55,10 @@ class SubmissionsController < ApplicationController
   end
 
   private
+
+  def prefill_with_prev_submission_params
+    ActiveRecord::Type::Boolean.new.cast(params[:prefill_with_prev_submission])
+  end
 
   def submission_params
     params.require(:submission)
