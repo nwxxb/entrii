@@ -23,15 +23,19 @@
             <% end %>
           <% end %>
           <% if question.date? %>
-            <%= submission_values_f.date_field :value, required: !question.is_emptyable? %>
+            <%= submission_values_f.date_field :value, required: !question.is_emptyable?, value: @old_submission&.submission_values&.find_by(question: question)&.value %>
           <% else %>
-            <%= submission_values_f.text_field :value, required: !question.is_emptyable?, pattern: question.valid_pattern %>
+            <%= submission_values_f.text_field :value, required: !question.is_emptyable?, pattern: question.valid_pattern, value: @old_submission&.submission_values&.find_by(question: question)&.value %>
           <% end %>
         </fieldset>
     <% end %>
 
     <div class="actions">
       <%= f.submit "save submission", class: "button" %>
+      <%= link_to new_questionnaire_submission_path(@questionnaire, prefill_with_prev_submission: true), class: "button" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M360-280q-33 0-56.5-23.5T280-360v-400q0-33 23.5-56.5T360-840h400q33 0 56.5 23.5T840-760v400q0 33-23.5 56.5T760-280H360Zm0-80h400v-400H360v400ZM200-200v80q-33 0-56.5-23.5T120-200h80Zm-80-80v-80h80v80h-80Zm0-160v-80h80v80h-80Zm0-160v-80h80v80h-80Zm160 480v-80h80v80h-80Zm160 0v-80h80v80h-80Zm160 0v-80h80v80h-80Z"/></svg>
+        prefill with previous submission
+      <% end %>
     </div>
   <% end %>
 </div>

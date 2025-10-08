@@ -60,7 +60,7 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
     question_fields = add_submission_page.main_view.question_fields
     submission_values = ["text1", "1", "text2", "2", "text3", "2012-12-01"]
     submission_values.each_with_index do |submission_value, i|
-      question_fields[i].question_field.fill_in with: submission_value
+      question_fields[i].input.fill_in with: submission_value
     end
     add_submission_page.main_view.submit_btn.click
     main_page = questionnaire_prism.main
@@ -80,12 +80,12 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
     question_fields = add_submission_page.main_view.question_fields
     submission_values = ["text1", "2024-11-01", "1"]
     submission_values.each_with_index do |submission_value, i|
-      question_fields[i].question_field.fill_in with: submission_value
+      question_fields[i].input.fill_in with: submission_value
     end
     add_submission_page.main_view.submit_btn.click
     main_page = questionnaire_prism.main
     main_page.main_view.table.row_actions.first.click_link_or_button("edit")
-    question_fields = add_submission_page.main_view.question_fields.first.question_field.fill_in with: "updated text"
+    question_fields = add_submission_page.main_view.question_fields.first.input.fill_in with: "updated text"
     add_submission_page.main_view.submit_btn.click
 
     expect(main_page.main_view.table.rows_text.first).to start_with(["updated text", "2024-11-01", "1"])
@@ -100,12 +100,29 @@ RSpec.feature "Questionnaire (and it's child resources: question, submission, an
     question_fields = add_submission_page.main_view.question_fields
     submission_values = ["text1", "1"]
     submission_values.each_with_index do |submission_value, i|
-      question_fields[i].question_field.fill_in with: submission_value
+      question_fields[i].input.fill_in with: submission_value
     end
     add_submission_page.main_view.submit_btn.click
     main_page = questionnaire_prism.main
     main_page.main_view.table.row_actions.first.click_link_or_button("remove")
 
     expect(main_page.main_view.table).to have_no_rows
+  end
+
+  scenario "user can duplicate the previous record as pre-filling value for form submission" do
+    text_question = create(:question, :text, name: "first question", questionnaire: questionnaire, position: 0)
+    number_question = create(:question, :number, name: "amount", questionnaire: questionnaire, position: 1)
+    create(:submission, questionnaire: questionnaire) do |s|
+      create(:submission_value, value: "a text from existing submission value", questionnaire: questionnaire, question: text_question, submission: s)
+      create(:submission_value, value: "123456", questionnaire: questionnaire, question: number_question, submission: s)
+    end
+
+    add_submission_page = questionnaire_prism.add_submission
+    add_submission_page.load(id: questionnaire.id, query: {prefill_with_prev_submission: true})
+
+    value_inside_fields = add_submission_page.main_view.question_fields.map do |question_field|
+      question_field.input.value
+    end
+    expect(value_inside_fields).to eq(["a text from existing submission value", "123456"])
   end
 end
